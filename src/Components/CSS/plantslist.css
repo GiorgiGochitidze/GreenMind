@@ -1,0 +1,25 @@
+.plantsList-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+.plants-card{
+    width: 250px;
+    min-height: 400px;
+    height: auto;
+    overflow: hidden;
+    border-radius: 12px;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plant-img{
+    width: 250px;
+}

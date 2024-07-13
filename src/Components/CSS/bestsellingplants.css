@@ -1,0 +1,32 @@
+.bestSellingPlants-container{
+    width: 90%;
+    min-height: 400px;
+    height: auto;
+    display: flex;
+    overflow: hidden;
+    margin-top: 50px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+.goToAllItems-container{
+    min-width: 250px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+}
+
+.seeMore-btn{
+    width: 150px;
+    height: 38px;
+    background-color: #C1DCDC;
+    border-radius: 8px;
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Poppins', sans-serif;
+}

@@ -1,0 +1,13 @@
+:root{
+  overflow-x: hidden;
+}
+
+body{
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./Fonts/Poppins-Medium.ttf') format('truetype');
+}

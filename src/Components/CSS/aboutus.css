@@ -1,0 +1,40 @@
+.aboutUs-container{
+    width: 90%;
+    min-height: 400px;
+    height: auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+.criteriums-container{
+    width: 100%;
+    min-height: 300px;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.criteriums-card{
+    width: 350px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    text-align: center;
+}
+
+.icon-container{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #C1DCDC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-txt{
+    color: rgba(30, 30, 30, 50%);
+}
