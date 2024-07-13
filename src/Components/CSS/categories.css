@@ -1,0 +1,58 @@
+.categories-container{
+    width: 100%;
+    min-height: 400px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.categories-list{
+    width: 100%;
+    height: 600px;
+    background-color: #C1DCDC;
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+}
+
+.categories-card{
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.categories-card img{
+    width: 100%;
+}
+
+.first-card {
+    position: absolute;
+    top: -100px;
+    left: 50px;
+}
+
+.third-card {
+    position: absolute;
+    top: -100px;
+    right: 50px;
+}
+
+.explore-btn{
+    width: 150px;
+    height: 38px;
+    position: absolute;
+    bottom: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border: 0;
+    font-family: 'Poppins', sans-serif;
+}
