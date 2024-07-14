@@ -9,7 +9,6 @@
 .banner-items-container{
     width: 90%;
     height: 380px;
-    background-color: red;
     border-radius: 24px;
     background-color: #C1DCDC;
     display: flex;
@@ -18,14 +17,14 @@
 
 .text-container{
     width: 50%;
-    height: 100%;
+    height: 380px;
     font-family: 'Poppins', sans-serif;
     padding-left: 40px;
 }
 
 .image-container{
     width: 50%;
-    height: 100%;
+    height: 380px;
     position: relative;
     display: flex;
     justify-content: center;
@@ -39,29 +38,9 @@
     right: 50px;
 }
 
-/* right arrow rounded near the flower image */
-
-.right-arrow{
-    width: 80px;
-    height: 130px;
-    position: absolute;
-    right: 30px;
-    top: 20px;
-}
-
-.left-arrow{
-    width: 160px;
-    height: 80px;
-    position: absolute;
-    right: 330px;
-    top: 40px;
-    transform: rotate(25deg);
-}
-
 .amounts-counterInfo{
     width: 350px;
     height: auto;
-    /* background-color: red;1 */
     display: flex;
     justify-content: start;
     align-items: center;
@@ -71,7 +50,7 @@
 }
 
 .line{
-    width: 55px;
+    min-width: 55px;
     height: 1px;
     background-color: black;
     transform: rotate(90deg);
@@ -116,7 +95,108 @@
     right: 5px;
 }
 
-@font-face {
-    font-family: 'Poppins';
-    src: url('./Fonts/Poppins-Medium.ttf') format('truetype');
+@media screen and (max-width: 880px) {
+    .banner-items-container{
+        flex-direction: column;
+        height: auto;
+        width: 500px;
+    }
+
+    .banner-container{
+        height: auto;
+    }
+
+    .image-container{
+        width: 100%;
+    }
+
+    .text-container{
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    
+
+    .left-arrow{
+        right: 230px;
+        top: -10px;
+        transform: rotate(50deg);
+    }
+
+    .searchbar{
+        width: 90%;
+    }
+
+    .searchbar input{
+        width: 100%;
+    }
+
+    .amounts-counterInfo{
+        width: 90%;
+        box-sizing: border-box;
+        justify-content: center;
+    }
 }
+
+@media screen and (max-width: 550px) {
+   .banner-container{
+    width: 90%;
+   }
+}
+
+@media screen and (max-width: 425px) {
+    .flower-image{
+        width: 90%;
+        right: 20px;
+        height: auto;
+        bottom: 50%;
+        transform: translateY(30%);
+        right: auto;
+    }
+
+    .left-arrow{
+        display: none;
+    }
+
+    .right-arrow{
+        display: none;
+    }
+    
+    .banner-items-container{
+        gap: 20px;
+    }
+
+    .image-container{
+        align-items: center;
+        justify-content: center;
+    }
+ }
+
+@media screen and (max-width: 372px) {
+    .amounts-counterInfo{
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .line{
+        transform: rotate(0deg);
+        width: 90%;
+    }
+
+    .text-container{
+        padding-left: 0;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+ }
+
+ 
+@media screen and (max-width: 340px) {
+   .image-container{
+    height: 300px;
+   }
+ }

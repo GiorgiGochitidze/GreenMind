@@ -9,5 +9,5 @@ body{
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Fonts/Poppins-Medium.ttf') format('truetype');
+  src: url('./Components/CSS/Fonts/Poppins-Medium.ttf') format('truetype');
 }

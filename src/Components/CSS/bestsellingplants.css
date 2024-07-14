@@ -30,3 +30,16 @@
     gap: 10px;
     font-family: 'Poppins', sans-serif;
 }
+
+@media screen and (max-width: 570px) {
+    .bestSellingPlants-container{
+        flex-direction: column;
+        gap: 50px;
+        align-items: center;
+    }
+
+    .goToAllItems-container{
+        align-items: center;
+        text-align: center;
+    }
+}

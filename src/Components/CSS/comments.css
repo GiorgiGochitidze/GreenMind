@@ -1,0 +1,55 @@
+.comments-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    gap: 40px;   
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    align-items: center;
+}
+
+.comments-card{
+    width: 580px;
+    height: 270px;
+    background-color: #C1DCDC;
+    border-radius: 10px;
+    position: relative;
+    padding-inline: 20px;
+}
+
+.rate-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+}
+
+.cards-list{
+    width: 100%;
+    display: flex;
+    height: auto;
+    gap: 50px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-info-container{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+@media screen and (max-width: 690px){
+    .comments-card{
+        width: 80%;
+        height: auto;
+        padding-block: 30px;
+    }
+
+    .comments-card :nth-child(1){
+        margin-top: 0 !important;
+    }
+}

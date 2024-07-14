@@ -21,7 +21,7 @@ const Banner = () => {
           </h1>
 
           <div className="amounts-counterInfo">
-            <p>
+            <p style={{wordBreak: 'keep-all'}}>
               <span style={{ fontSize: "30px" }}>50+</span> <br /> plant species
             </p>
 
@@ -45,16 +45,6 @@ const Banner = () => {
             className="flower-image"
             src={bannerPart}
             alt="banner part image of flower"
-          />
-          <img
-            className="right-arrow"
-            src={rightArrowRounded}
-            alt="rightArrowRounded"
-          />
-          <img
-            className="left-arrow"
-            src={leftArrowRounded}
-            alt="leftArrowRounded"
           />
         </div>
       </div>

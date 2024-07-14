@@ -4,8 +4,12 @@ import './CSS/categories.css';
 import plantAccessories from '../assets/plantAccessories.png';
 import naturalPlants from '../assets/naturalPlants.png';
 import artificialPlants from '../assets/artificialPlants.png';
+import { HiArrowLongRight } from 'react-icons/hi2';
+import { useMediaQuery } from 'react-responsive';
 
 const Categories = () => {
+    const isScreenWidth800 = useMediaQuery({ query: '(max-width: 956px)' });
+
     const cards = [
         { imgUrl: plantAccessories, plantDescription: "Plant Accessories" },
         { imgUrl: naturalPlants, plantDescription: "Natural Plants" },
@@ -24,9 +28,19 @@ const Categories = () => {
                         imgUrl={card.imgUrl}
                         plantDescription={card.plantDescription}
                         index={index}
-                    />
+                        className={`${index === 0 ? 'first-card' : ''} ${index === 2 ? 'third-card' : ''}`}
+                    >
+                        {isScreenWidth800 ? (index === 2 && (
+                            <button className='explore-btn'>
+                                Explore <HiArrowLongRight size={20} />
+                            </button>
+                        )) : (index === 1 && (
+                            <button className='explore-btn'>
+                                Explore <HiArrowLongRight size={20} />
+                            </button>
+                        ))}
+                    </CategoriesCard>
                 ))}
-                <button className='explore-btn'>Explore</button>
             </div>
         </div>
     );

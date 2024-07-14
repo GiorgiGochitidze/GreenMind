@@ -19,6 +19,10 @@ nav{
     gap: 10px;
 }
 
+nav p:hover{
+    cursor: pointer;
+}
+
 .nav-words{
     color: rgba(30, 30, 30, 50%);
     display: flex;
@@ -35,4 +39,22 @@ nav{
     justify-content: center;
     align-items: center;
     gap: 40px;
+}
+
+.icons:hover{
+    cursor: pointer;
+}
+
+@media screen and (max-width: 690px){
+    nav h1{
+        display: none;
+    }
+
+    .nav-words{
+        display: none;
+    }
+
+    nav{
+        justify-content: center;
+    }
 }
