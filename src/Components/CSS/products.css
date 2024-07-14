@@ -1,0 +1,10 @@
+.products-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-family: 'Poppins', sans-serif;
+}
