@@ -4,9 +4,9 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
     font-family: "Advent-Pro", sans-serif;
     font-weight: 500;
+    position: relative;
 }
 
 nav{
@@ -17,6 +17,7 @@ nav{
     align-items: center;
     padding-inline: 40px;
     gap: 10px;
+    transition: 0.2s all;
 }
 
 nav p:hover{
@@ -45,11 +46,49 @@ nav p:hover{
     cursor: pointer;
 }
 
+.userItems-container{
+    width: 200px;
+    height: 200px;
+    background-color: #C1DCDC;
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    transition: 0.2s all;
+}
+
+.userItems-container p{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s all;
+}
+
+.userItems-container p:hover{
+    background-color: white;
+}
+
 @media screen and (max-width: 690px){
     nav h1{
         display: none;
     }
 
+    nav{
+        justify-content: space-evenly;
+    }
+}
+
+@media screen and (max-width: 485px){
     .nav-words{
         display: none;
     }

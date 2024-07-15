@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     font-family: 'Poppins', sans-serif;
-    color: white;
+    color: black;
     padding-bottom: 50px;
 }
 
@@ -42,10 +42,10 @@
     height: 40px;
     box-sizing: border-box;
     border-radius: 10px;
-    border: 1px solid white;
+    border: 1px solid black;
     background-color: transparent;
     padding-inline: 10px;
-    color: white;
+    color: black;
     transition: 0.3s all;
 }
 
@@ -55,15 +55,14 @@
     min-height: 100px;
     box-sizing: border-box;
     border-radius: 10px;
-    border: 1px solid white;
+    border: 1px solid black;
     background-color: transparent;
     padding-inline: 10px;
-    color: white;
+    color: black;
 }
 
 .fields-container textarea:focus{
     outline: none;
-    border: 1px solid lawngreen;
 }
 
 .fields-container textarea::placeholder{
@@ -72,7 +71,6 @@
 
 .fields-container input:focus{
     outline: none;
-    border: 1px solid lawngreen;
 }
 
 .fields-container input::placeholder{
@@ -82,9 +80,9 @@
 .send-btn{
     width: 200px;
     height: 38px;
-    border: 1px solid white;
+    border: 1px solid black;
     border-radius: 10px;
-    color: white;
+    color: black;
     background-color: transparent;
     transition: 0.3s all;
 }

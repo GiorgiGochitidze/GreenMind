@@ -1,0 +1,89 @@
+.auth-container {
+  width: 100%;
+  height: 559px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-container {
+  width: 400px;
+  min-height: 450px;
+  height: auto;
+  padding-block: 20px;
+  background-color: #c1dcdc;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.form-container label {
+  width: 90%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+.form-container input {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: transparent;
+  color: black;
+  padding-inline: 10px;
+  box-sizing: border-box;
+}
+
+.form-container input:focus {
+  outline: none;
+}
+
+.auth-btn {
+  width: 200px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: transparent;
+  color: black;
+}
+
+.auth-btn:hover {
+  cursor: pointer;
+}
+
+.eye-container {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 10px;
+  bottom: 5px;
+}
+
+.eye-container:hover {
+  cursor: pointer;
+}
+
+.authLink-txt{
+    color: blue;
+    text-decoration: none;
+}
+
+.authLink-txt:hover{
+    cursor: pointer;
+}
+
+@media screen and (max-width: 444px) {
+  .form-container {
+    width: 90%;
+  }
+}
