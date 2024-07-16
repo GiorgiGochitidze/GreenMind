@@ -7,6 +7,7 @@ import ContactUs from "./Components/ContactUs";
 import Registration from "./Components/Registration";
 import LogIn from "./Components/LogIn";
 import Cart from "./Components/Cart";
+import AddNewPlants from "./Components/AddNewPlants";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/Registration" element={<Registration />} />
         <Route path="/LogIn" element={<LogIn />} />
         <Route path="/Cart" element={<Cart />} />
+        <Route path="/AddNewPlants" element={<AddNewPlants />} />
       </Routes>
     </Router>
   );

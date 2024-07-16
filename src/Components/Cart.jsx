@@ -2,7 +2,6 @@ import { jwtDecode } from "jwt-decode";
 import "./CSS/cart.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import naturalPlant from "../assets/naturalPlant.png";
 import { motion } from "framer-motion";
 import { PiShoppingCartSimpleLight } from "react-icons/pi";
 
@@ -28,12 +27,13 @@ const Cart = () => {
     }
   }, []);
 
-  const handleRemoveCart = (plantsname, price) => {
+  const handleRemoveCart = ({plantsname, price, cardId}) => {
     axios
       .post("http://localhost:5000/removeFromCart", {
         userId: decoded.userId,
-        plantsname,
-        price,
+        plantsname: plantsname,
+        price: price,
+        cardId: cardId
       })
       .then((response) => {
         setCartList(response.data);
@@ -54,10 +54,10 @@ const Cart = () => {
             onMouseLeave={() => setHoveredIndex(null)}
           >
             {token && (
-              <div className="cart-icon">
+              <div style={{right: "15px"}} className="cart-icon">
                 <PiShoppingCartSimpleLight
                   onClick={() => {
-                    handleRemoveCart(item.plantsname, item.price)
+                    handleRemoveCart({plantsname: item.plantsname, price: item.price, cardId: item._id})
                     window.location.reload()
                 }}
                   size={15}
@@ -65,7 +65,7 @@ const Cart = () => {
                 <div className="line-close"></div>
               </div>
             )}
-            <img className="plant-img" src={naturalPlant} alt="naturalPlant" />
+            <img className="plant-img" src={item.imgUrl} alt="naturalPlant" />
             <p>{item.plantsname}</p>
             <p style={{ color: "1E1E1E", opacity: "50%" }}>₾ {item.price}</p>
 

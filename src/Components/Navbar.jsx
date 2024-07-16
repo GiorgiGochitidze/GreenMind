@@ -12,6 +12,7 @@ const decoded = token ? jwtDecode(token) : "token doesn't exist";
 
 const Navbar = () => {
   const [profile, setProfile] = useState(false);
+  const [settings, setSettings] = useState(false)
   const profileRef = useRef(null);
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null);
@@ -152,7 +153,7 @@ const Navbar = () => {
                   className="userItems-container"
                 >
                   <p className="profile-items">{decoded.userName}</p>
-                  <p className="profile-items">Add New Plants</p>
+                  {decoded.role === 'Admin' && <Link onClick={() => setProfile(false)} className="profile-items" style={linkStyle} to='/AddNewPlants'><p>Add New Plants</p></Link>}
                   <Link
                     onClick={() => setProfile(false)}
                     className="profile-items"
@@ -211,6 +212,10 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+
+      {settings &&  <div className="settings-container">
+        
+      </div>}
     </header>
   );
 };

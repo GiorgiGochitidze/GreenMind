@@ -1,0 +1,116 @@
+.addPlant-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.image-upload{
+    width: 95%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0 auto;
+    flex-direction: column;
+    text-align: center;
+}
+
+.custom-file-upload {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    cursor: pointer;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none; /* Hide the default file input */
+}
+
+.plant-name-input{
+    width: 90%;
+    height: 28px;
+    margin: 0 auto;
+    border: 1px solid #303f9f;
+    border-radius: 5px;
+    padding-inline: 10px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.plant-price-input{
+    width: 100%;
+    height: 28px;
+    margin: 0 auto;
+    border: 1px solid #303f9f;
+    border-radius: 5px;
+    padding-inline: 10px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.plant-name-input:focus{
+    outline: none;
+}
+
+.plant-price-input:focus{
+    outline: none;
+}
+
+.price-container{
+    width: 90%;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload-btn{
+    margin: 0 auto;
+    width: 150px;
+    height: 38px;
+    border: 1px solid #3f51b5;
+    background-color: transparent;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.upload-btn:hover{
+    cursor: pointer;
+}
+
+.plants-cards{
+    width: 250px;
+    height: auto;
+    overflow: hidden;
+    border-radius: 12px;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 30px;
+    position: relative;
+    transition: 0.2s all;
+    font-family: 'Poppins', sans-serif;
+    padding-bottom: 30px;
+    margin-top: 20px;
+}
+
+.preview-image{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}

@@ -33,6 +33,21 @@
     border: 1px solid black;
     border-radius: 50%;
     position: absolute;
+    right: 55px;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s all;
+    z-index: 2;
+}
+
+.del-icon{
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 50%;
+    position: absolute;
     right: 15px;
     top: 10px;
     display: flex;
@@ -40,6 +55,14 @@
     align-items: center;
     transition: 0.2s all;
     z-index: 2;
+    font-family: 'Poppins', sans-serif;
+}
+
+.del-icon:hover{
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 1px solid white;
 }
 
 .cart-icon:hover{

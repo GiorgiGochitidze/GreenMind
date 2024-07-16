@@ -5,27 +5,42 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
 const token = sessionStorage.getItem("token");
-const decoded = token ? jwtDecode(token) : 'token doesnt exists'
+const decoded = token ? jwtDecode(token) : "token doesnt exists";
 
-const PlantsCard = ({ imgURL, PlantsName, Price }) => {
-
+const PlantsCard = ({ imgURL, PlantsName, Price, cardId }) => {
   const [buyState, setBuyState] = useState(false);
 
-  const handleAddToCart = ({PlantsName, Price}) => {
+  const handleAddToCart = ({ imgURL, PlantsName, Price }) => {
+    axios
+      .post("http://localhost:5000/addToCart", {
+        imgUrl: imgURL,
+        plantsname: PlantsName,
+        price: Price,
+        userId: decoded.userId,
+        cardId: cardId,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log("something went wrong while adding item on cart", err);
+      });
+  };
 
-    axios.post('http://localhost:5000/addToCart', {
-      plantsname: PlantsName,
-      price: Price,
-      userId: decoded.userId,
-    })
-
-    .then((response) => {
-      console.log(response.data)
-    })
-    .catch((err) => {
-      console.log('something went wrong while adding item on cart', err)
-    })
-  }
+  const handleDeleteProduct = ({ cardId }) => {
+    axios
+      .post("http://localhost:5000/deleteProduct", {
+        cardId: cardId,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log("something went wrong while deleting product", err);
+      });
+  };
+  
+  
 
   return (
     <div
@@ -39,7 +54,16 @@ const PlantsCard = ({ imgURL, PlantsName, Price }) => {
 
       {token && (
         <div className="cart-icon">
-          <PiShoppingCartSimpleLight onClick={() => handleAddToCart({PlantsName: PlantsName, Price: Price})} size={15} />
+          <PiShoppingCartSimpleLight
+            onClick={() => handleAddToCart({ imgURL, PlantsName, Price })}
+            size={15}
+          />
+        </div>
+      )}
+
+      {token && decoded.role === "Admin" && (
+        <div className="del-icon">
+          <p onClick={() => handleDeleteProduct({imgURL, PlantsName, Price, cardId})}>X</p>
         </div>
       )}
 
@@ -47,7 +71,7 @@ const PlantsCard = ({ imgURL, PlantsName, Price }) => {
         <motion.div
           initial={{ scale: 0, borderRadius: "50%" }}
           animate={{ scale: 1, borderRadius: "0%" }}
-          transition={{duration: 0.1}}
+          transition={{ duration: 0.1 }}
           className="buy-container"
         >
           <button>Buy</button>

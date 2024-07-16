@@ -57,9 +57,8 @@ const Registration = () => {
       console.log(response.data);
       setMessage("Registered successfully");
 
-        // Redirect after 1.5 seconds
         setTimeout(() => {
-          navigate("/"); // Redirect to the home page
+          navigate("/LogIn");
           window.location.reload()
         }, 1500);
     })

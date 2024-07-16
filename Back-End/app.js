@@ -1,15 +1,42 @@
 const express = require("express");
 const cors = require("cors");
-const PORT = 5000;
 const mongoose = require("mongoose");
-require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const fs = require("fs");
+const cloudinary = require("cloudinary").v2;
+require("dotenv").config();
+
 const User = require("./User");
+const Products = require("./Products");
 
 const app = express();
+const PORT = 5000;
+
 app.use(express.json());
 app.use(cors());
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const dir = "./uploads/";
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    cb(null, dir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Save with original file name
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const dbUserPass = process.env.DB_USER_PASS;
 
@@ -31,7 +58,7 @@ const uri = `mongodb+srv://greenmind2424:${dbUserPass}@greenmind.apcab2o.mongodb
 mongoose
   .connect("mongodb://localhost:27017/GreenMind")
   .then(() => {
-    console.log("Connected MongoDB Succesfully");
+    console.log("Connected MongoDB Successfully");
   })
   .catch((err) => {
     console.log("Something went wrong while connecting", err);
@@ -41,7 +68,6 @@ app.post("/register", async (req, res) => {
   const { userName, email, password } = req.body;
 
   try {
-    // Check if userName or email already exist
     const existingUser = await User.findOne({ $or: [{ userName }, { email }] });
     if (existingUser) {
       return res
@@ -56,7 +82,7 @@ app.post("/register", async (req, res) => {
       email,
       password: hashedPassword,
       cart: [],
-      role: 'User'
+      role: "User",
     });
 
     await newUser.save();
@@ -73,21 +99,18 @@ app.post("/logIn", async (req, res) => {
   const { userName, email, password } = req.body;
 
   try {
-    // Check if userName or email exists
     const user = await User.findOne({ $or: [{ userName }, { email }] });
     if (!user) {
       return res.status(404).send("User not found");
     }
 
-    // Check password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).send("Invalid password");
     }
 
-    // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, userName: user.userName },
+      { userId: user._id, userName: user.userName, role: user.role },
       randomString,
       { expiresIn: "1h" }
     );
@@ -100,11 +123,11 @@ app.post("/logIn", async (req, res) => {
 });
 
 app.post("/addToCart", async (req, res) => {
-  const { userId, plantsname, price } = req.body;
+  const { userId, imgUrl, plantsname, price, cardId } = req.body;
 
   try {
     await User.findByIdAndUpdate(userId, {
-      $push: { cart: { plantsname, price } },
+      $push: { cart: { imgUrl, plantsname, price, cardId } },
     });
 
     res.status(200).send("Successfully added to cart");
@@ -133,24 +156,91 @@ app.post("/loadCart", async (req, res) => {
 });
 
 app.post("/removeFromCart", async (req, res) => {
-  const { userId, plantsname, price } = req.body;
+  const { userId, plantsname, price, cardId } = req.body;
 
   try {
     const user = await User.findByIdAndUpdate(userId, {
-      $pull: { cart: { plantsname: plantsname, price: price } },
+      $pull: { cart: { plantsname: plantsname, price: price, cardId: cardId } },
     });
 
     if (!user) {
       return res.status(404).send("User not found");
     }
 
-    res.status(200).json(user.cart)
-
+    res.status(200).json(user.cart);
   } catch (err) {
     console.log(err);
     res.status(404).send("Something went wrong when removing item from cart");
   }
 });
+
+app.post("/addNewPlant", upload.single("image"), async (req, res) => {
+  try {
+    const { plantName, plantPrice } = req.body;
+    const { path } = req.file; // Path to temporary uploaded file
+
+    // Upload image to Cloudinary
+    const result = await cloudinary.uploader.upload(path, { folder: "plants" });
+
+    // Save new plant to MongoDB
+    const newPlant = new Products({
+      imgUrl: result.secure_url,
+      plantsname: plantName,
+      price: plantPrice,
+    });
+
+    await newPlant.save();
+    res.status(201).json({ message: "Plant added successfully" });
+  } catch (error) {
+    console.error("Error adding plant:", error);
+    res.status(500).json({ message: "Failed to add plant" });
+  }
+});
+
+app.post("/loadPlants", async (req, res) => {
+  try {
+    const plants = await Products.find({}, "imgUrl plantsname price");
+    res.status(200).json(plants);
+  } catch (err) {
+    console.error("Error loading plants:", err);
+    res.status(500).json({ message: "Failed to load plants" });
+  }
+});
+
+app.post("/deleteProduct", async (req, res) => {
+  const { cardId } = req.body;
+
+  try {
+    // Find product in Products collection to get cloudinaryId
+    const product = await Products.findById(cardId);
+
+    // Ensure product exists
+    if (!product) {
+      return res.status(404).send("Product not found");
+    }
+
+    // Delete from Cloudinary using cloudinaryId
+    if (product.cloudinaryId) {
+      await cloudinary.uploader.destroy(product.cloudinaryId);
+    }
+
+    // Delete from Products collection based on _id
+    await Products.findByIdAndDelete(cardId);
+
+    // Delete from all users' carts
+    await User.updateMany(
+      {},
+      { $pull: { cart: { cardId: cardId } } }
+    );
+
+    res.status(200).send("Product deleted successfully");
+  } catch (err) {
+    console.log("Error deleting product", err);
+    res.status(500).send("Something went wrong while deleting the product");
+  }
+});
+
+
 
 app.get("/", (req, res) => {
   res.send(`<h1>Hello World</h1>`);
