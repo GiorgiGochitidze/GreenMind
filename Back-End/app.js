@@ -56,6 +56,7 @@ app.post("/register", async (req, res) => {
       email,
       password: hashedPassword,
       cart: [],
+      role: 'User'
     });
 
     await newUser.save();

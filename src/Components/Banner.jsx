@@ -1,10 +1,11 @@
 import "./CSS/banner.css";
 import bannerPart from "../assets/bannerPart.png";
-import rightArrowRounded from "../assets/rightArrowRounded.png";
-import leftArrowRounded from "../assets/leftArrowRounded.png";
 import { IoIosSearch } from "react-icons/io";
+import { useState } from "react";
 
-const Banner = () => {
+const Banner = ({ setSearchState, searchState, setSearchQuery }) => {
+  const [inputVal, setInputVal] = useState("");
+
   return (
     <div className="banner-container">
       <div className="banner-items-container">
@@ -21,7 +22,7 @@ const Banner = () => {
           </h1>
 
           <div className="amounts-counterInfo">
-            <p style={{wordBreak: 'keep-all'}}>
+            <p style={{ wordBreak: "keep-all" }}>
               <span style={{ fontSize: "30px" }}>50+</span> <br /> plant species
             </p>
 
@@ -33,7 +34,22 @@ const Banner = () => {
           </div>
 
           <div className="searchbar">
-            <input type="text" placeholder="What are you looking for?" />
+            <input
+              onFocus={() => setSearchState(true)}
+              value={inputVal}
+              onChange={(e) => {
+                const value = e.target.value;
+                setInputVal(value);
+                setSearchQuery(value);
+                if (value === '') {
+                  setSearchState(false);
+                } else {
+                  setSearchState(true);
+                }
+              }}
+              type="text"
+              placeholder="What are you looking for?"
+            />
             <div className="searchIcon-container">
               <IoIosSearch />
             </div>
