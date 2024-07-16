@@ -2,12 +2,14 @@ import { useState } from "react";
 import "./CSS/forms.css";
 import Form from "./Form";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate()
 
   const isValidEmail = () => {
     // Check if email ends with known domains
@@ -53,6 +55,13 @@ const Registration = () => {
         password: password,
     }).then((response) => {
       console.log(response.data);
+      setMessage("Registered successfully");
+
+        // Redirect after 1.5 seconds
+        setTimeout(() => {
+          navigate("/"); // Redirect to the home page
+          window.location.reload()
+        }, 1500);
     })
     .catch((err) => {
         console.log('Something went wrong while sending registration data', err)

@@ -6,6 +6,7 @@ import Products from "./Components/Products";
 import ContactUs from "./Components/ContactUs";
 import Registration from "./Components/Registration";
 import LogIn from "./Components/LogIn";
+import Cart from "./Components/Cart";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/LogIn" element={<LogIn />} />
+        <Route path="/Cart" element={<Cart />} />
       </Routes>
     </Router>
   );

@@ -5,6 +5,7 @@ import MenuIcon from "../assets/menuicon.png";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { motion } from "framer-motion";
 
 const token = sessionStorage.getItem("token");
 const decoded = token ? jwtDecode(token) : "token doesn't exist";
@@ -12,6 +13,11 @@ const decoded = token ? jwtDecode(token) : "token doesn't exist";
 const Navbar = () => {
   const [profile, setProfile] = useState(false);
   const profileRef = useRef(null);
+
+  const linkStyle = {
+    textDecoration: "none",
+    color: "black",
+  };
 
   const navList = [
     { name: "Home", path: "/" },
@@ -70,11 +76,13 @@ const Navbar = () => {
         </div>
 
         <div className="navigation-icons">
-          <PiShoppingCartSimpleLight className="icons" size={25} />
+          <Link to="/Cart" style={linkStyle}>
+            <PiShoppingCartSimpleLight className="icons" size={25} />
+          </Link>
           {!token && (
             <Link
               onClick={() => setIndexVal(null)}
-              style={{ textDecoration: "none", color: "black" }}
+              style={linkStyle}
               to="/Registration"
             >
               <CiUser className="icons" size={25} />
@@ -98,11 +106,19 @@ const Navbar = () => {
                 size={25}
               />
               {profile && (
-                <div className="userItems-container">
-                  <p>{decoded.userName}</p>
-                  <p>Profile</p>
-                  <p>Cart</p>
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "200px" }}
+                  transition={{ duration: 0.2 }}
+                  className="userItems-container"
+                >
+                  <p className="profile-items">{decoded.userName}</p>
+                  <p className="profile-items">Profile</p>
+                  <Link onClick={() => setProfile(false)} className="profile-items" to="/Cart" style={linkStyle}>
+                    <p>Cart</p>
+                  </Link>
                   <p
+                    className="profile-items"
                     onClick={() => {
                       sessionStorage.removeItem("token");
                       window.location.reload();
@@ -110,7 +126,7 @@ const Navbar = () => {
                   >
                     Log Out
                   </p>
-                </div>
+                </motion.div>
               )}
             </div>
           )}

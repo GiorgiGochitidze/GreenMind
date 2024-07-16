@@ -65,7 +65,7 @@ nav p:hover{
     transition: 0.2s all;
 }
 
-.userItems-container p{
+.profile-items{
     width: 100%;
     height: 50px;
     display: flex;
@@ -74,7 +74,7 @@ nav p:hover{
     transition: 0.2s all;
 }
 
-.userItems-container p:hover{
+.profile-items:hover{
     background-color: white;
 }
 

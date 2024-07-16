@@ -4,9 +4,7 @@ const PORT = 5000;
 const mongoose = require("mongoose");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
-
 const jwt = require("jsonwebtoken");
-
 const User = require("./User");
 
 const app = express();
@@ -16,8 +14,9 @@ app.use(cors());
 const dbUserPass = process.env.DB_USER_PASS;
 
 const generateRandomString = (length) => {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+';
-  let result = '';
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+  let result = "";
   const charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -25,7 +24,6 @@ const generateRandomString = (length) => {
   return result;
 };
 
-// Example usage to generate a random string of length 64
 const randomString = generateRandomString(64);
 
 const uri = `mongodb+srv://greenmind2424:${dbUserPass}@greenmind.apcab2o.mongodb.net/?retryWrites=true&w=majority&appName=GreenMind`;
@@ -53,7 +51,12 @@ app.post("/register", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({ userName, email, password: hashedPassword });
+    const newUser = new User({
+      userName,
+      email,
+      password: hashedPassword,
+      cart: [],
+    });
 
     await newUser.save();
 
@@ -82,7 +85,11 @@ app.post("/logIn", async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ userName: user.userName }, randomString, { expiresIn: '1h' });
+    const token = jwt.sign(
+      { userId: user._id, userName: user.userName },
+      randomString,
+      { expiresIn: "1h" }
+    );
 
     res.status(200).json({ token });
   } catch (err) {
@@ -91,6 +98,58 @@ app.post("/logIn", async (req, res) => {
   }
 });
 
+app.post("/addToCart", async (req, res) => {
+  const { userId, plantsname, price } = req.body;
+
+  try {
+    await User.findByIdAndUpdate(userId, {
+      $push: { cart: { plantsname, price } },
+    });
+
+    res.status(200).send("Successfully added to cart");
+  } catch (err) {
+    console.log("Error adding to cart", err);
+    res.status(500).send("Something went wrong while adding to the cart");
+  }
+});
+
+app.post("/loadCart", async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      console.log("User not found");
+      res.status(404).send("User not found");
+    }
+
+    res.status(200).json(user.cart);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Something went wrong while fetching the cart");
+  }
+});
+
+app.post("/removeFromCart", async (req, res) => {
+  const { userId, plantsname, price } = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, {
+      $pull: { cart: { plantsname: plantsname, price: price } },
+    });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    res.status(200).json(user.cart)
+
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("Something went wrong when removing item from cart");
+  }
+});
 
 app.get("/", (req, res) => {
   res.send(`<h1>Hello World</h1>`);
