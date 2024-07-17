@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Poppins", sans-serif;
   flex-direction: column;
   gap: 20px;
 }
@@ -16,7 +15,6 @@
   padding-block: 20px;
   background-color: #c1dcdc;
   border-radius: 10px;
-  font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;

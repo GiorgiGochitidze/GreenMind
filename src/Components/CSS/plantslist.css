@@ -20,7 +20,6 @@
     gap: 10px;
     position: relative;
     transition: 0.2s all;
-    font-family: 'Poppins', sans-serif;
 }
 
 .plant-img{
@@ -55,7 +54,6 @@
     align-items: center;
     transition: 0.2s all;
     z-index: 2;
-    font-family: 'Poppins', sans-serif;
 }
 
 .del-icon:hover{

@@ -6,26 +6,43 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
+import axios from "axios"; // Import axios for making HTTP requests
 
 const token = sessionStorage.getItem("token");
-const decoded = token ? jwtDecode(token) : "token doesn't exist";
+const decoded = token
+  ? jwtDecode(token)
+  : { userId: null, userName: "", email: "" };
 
 const Navbar = () => {
   const [profile, setProfile] = useState(false);
-  const [settings, setSettings] = useState(false)
+  const [settings, setSettings] = useState(false);
+  const [userName, setUserName] = useState(decoded.userName);
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState(false);
+  const [password, setPassword] = useState("");
   const profileRef = useRef(null);
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null);
 
   const [indexVal, setIndexVal] = useState(() => {
-    // Retrieve the index from local storage or default to 0
     return parseInt(localStorage.getItem("activeNavIndex"), 10) || 0;
   });
 
   useEffect(() => {
-    // Update local storage whenever indexVal changes
     localStorage.setItem("activeNavIndex", indexVal);
   }, [indexVal]);
+
+  const isValidEmail = () => {
+    // Check if email ends with known domains
+    if (
+      email.endsWith("@gmail.com") ||
+      email.endsWith("@yahoo.com") ||
+      email.endsWith("@hotmail.com")
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   useEffect(() => {
     const handleClickOutsideProfile = (event) => {
@@ -75,6 +92,29 @@ const Navbar = () => {
     { name: "Contacts", path: "/ContactUs" },
   ];
 
+  const handleSaveChanges = async () => {
+    if (!isValidEmail()) {
+      setMessage("Incorrect email format");
+      setTimeout(() => {
+        setMessage("");
+      }, 1200);
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:5000/updateUser", {
+        userId: decoded.userId,
+        userName,
+        email,
+        password,
+      });
+      setMessage(response.data); // Display the response message
+    } catch (err) {
+      console.error("Error updating user:", err);
+      setMessage("Error updating user");
+    }
+  };
+
   return (
     <header>
       <nav>
@@ -88,7 +128,15 @@ const Navbar = () => {
             style={linkStyle}
             to="/"
           >
-            <h1 style={{ color: "#1E1E1E", fontWeight: 300 }}>GREENMIND</h1>
+            <h1
+              style={{
+                color: "#1E1E1E",
+                fontWeight: 300,
+                fontFamily: "Advent-Pro",
+              }}
+            >
+              GREENMIND
+            </h1>
           </Link>
 
           <div className="nav-words">
@@ -153,7 +201,16 @@ const Navbar = () => {
                   className="userItems-container"
                 >
                   <p className="profile-items">{decoded.userName}</p>
-                  {decoded.role === 'Admin' && <Link onClick={() => setProfile(false)} className="profile-items" style={linkStyle} to='/AddNewPlants'><p>Add New Plants</p></Link>}
+                  {decoded.role === "Admin" && (
+                    <Link
+                      onClick={() => setProfile(false)}
+                      className="profile-items"
+                      style={linkStyle}
+                      to="/AddNewPlants"
+                    >
+                      <p>Add New Plants</p>
+                    </Link>
+                  )}
                   <Link
                     onClick={() => setProfile(false)}
                     className="profile-items"
@@ -162,7 +219,14 @@ const Navbar = () => {
                   >
                     <p>Cart</p>
                   </Link>
-                  <p className="profile-items">Settings</p>
+                  <p
+                    onClick={() =>
+                      settings ? setSettings(false) : setSettings(true)
+                    }
+                    className="profile-items"
+                  >
+                    Settings
+                  </p>
                   <p
                     className="profile-items"
                     onClick={() => {
@@ -213,9 +277,53 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {settings &&  <div className="settings-container">
-        
-      </div>}
+      {settings && (
+        <div className="settings-container">
+          <div className="settings-pad">
+            <h1 style={{margin: '0 auto'}}>Settings</h1>
+            <label>
+              Username:
+              <input
+                type="text"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                placeholder="Change User Name"
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Change User Email"
+              />
+            </label>
+            <label>
+              Password:
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Change User Password"
+              />
+            </label>
+            {message && <p>{message}</p>}
+            <button className="saveChanges-btn" onClick={handleSaveChanges}>Save Changes</button>
+            <button
+            className="saveChanges-btn"
+              onClick={() => {
+                setSettings(false);
+                setUserName(decoded.userName);
+                setEmail(decoded.email);
+                setPassword("");
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

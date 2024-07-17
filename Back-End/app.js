@@ -240,6 +240,43 @@ app.post("/deleteProduct", async (req, res) => {
   }
 });
 
+app.post("/updateUser", async (req, res) => {
+  const { userId, userName, email, password } = req.body;
+
+  try {
+    // Find the user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Track changes
+    let changes = {};
+
+    // Compare and update fields if they are different
+    if (user.userName !== userName) {
+      changes.userName = userName;
+    }
+    if (user.email !== email) {
+      changes.email = email;
+    }
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      changes.password = hashedPassword;
+    }
+
+    // Update the user if there are changes
+    if (Object.keys(changes).length > 0) {
+      await User.findByIdAndUpdate(userId, changes);
+      return res.status(200).send("User updated successfully");
+    } else {
+      return res.status(200).send("No changes made");
+    }
+  } catch (err) {
+    console.log("Error updating user", err);
+    res.status(500).send("Something went wrong while updating the user");
+  }
+});
 
 
 app.get("/", (req, res) => {

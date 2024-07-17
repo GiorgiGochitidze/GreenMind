@@ -4,7 +4,7 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Advent-Pro", sans-serif;
+    font-family: "Advent-Pro", sans-serif !important;
     font-weight: 500;
     position: relative;
 }
@@ -28,6 +28,10 @@ nav p:hover{
     color: rgba(30, 30, 30, 50%);
     display: flex;
     gap: 50px;
+}
+
+.nav-words p{
+    font-family: "Advent-Pro", sans-serif !important;
 }
 
 .navigation-words{
@@ -72,10 +76,19 @@ nav p:hover{
     justify-content: center;
     align-items: center;
     transition: 0.2s all;
+    font-family: 'Advent-Pro', sans-serif;
+}
+
+.profile-items p{
+    font-family: 'Advent-Pro', sans-serif;
 }
 
 .profile-items:hover{
     background-color: white;
+}
+
+.dropbox-items p{
+    font-family: 'Advent-Pro', sans-serif;
 }
 
 .menu-container{
@@ -125,6 +138,64 @@ nav p:hover{
     height: 100vh;
     backdrop-filter: blur(5px);
     z-index: 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.settings-pad{
+    width: 400px;
+    height: auto;
+    display: flex;
+    background-color: #C1DCDC;
+    border-radius: 20px;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+}
+
+.settings-pad label{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-pad label > input{
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 38px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: transparent;
+    padding-inline: 10px;
+}
+
+.settings-pad label > input:focus{
+    outline: none;
+}
+
+.saveChanges-btn{
+    width: 90%;
+    margin: 0 auto;
+    height: 38px;
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid black;
+}
+
+.saveChanges-btn:hover{
+    cursor: pointer;
+}
+
+@media screen and (max-width: 475px){
+    .settings-pad{
+        width: 80%;
+        margin-inline: 20px !important;
+    }
 }
 
 @media screen and (max-width: 690px){

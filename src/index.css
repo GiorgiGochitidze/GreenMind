@@ -2,6 +2,10 @@
   overflow-x: hidden;
 }
 
+*{
+  font-family: "Poppins";
+}
+
 body{
   height: 100vh;
   overflow-x: hidden;
