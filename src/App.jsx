@@ -8,6 +8,7 @@ import Registration from "./Components/Registration";
 import LogIn from "./Components/LogIn";
 import Cart from "./Components/Cart";
 import AddNewPlants from "./Components/AddNewPlants";
+import Footer from "./Components/Footer";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/Cart" element={<Cart />} />
         <Route path="/AddNewPlants" element={<AddNewPlants />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

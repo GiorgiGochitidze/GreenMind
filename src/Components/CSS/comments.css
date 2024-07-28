@@ -41,6 +41,83 @@
     margin-top: 50px;
 }
 
+.comment-input-container{
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.comment-input-container textarea{
+    max-width: 400px;
+    min-width: 150px;
+    width: 400px;
+    color: black;
+    min-height: 70px;
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.comment-input-container textarea:focus{
+    outline: none;
+}
+
+.comment-btn{
+    width: 200px;
+    height: 38px;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.comment-btn:hover{
+    cursor: pointer;
+}
+
+.options-container{
+    width: 420px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info-box{
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.user-info-box input{
+    width: 190px;
+    height: 38px;
+    padding-inline: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.user-info-box input:focus{
+    outline: none;
+}
+
+.star-container{
+    max-width: 200px;
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.star-container:hover{
+    cursor: pointer;
+}
+
 @media screen and (max-width: 690px){
     .comments-card{
         width: 80%;
