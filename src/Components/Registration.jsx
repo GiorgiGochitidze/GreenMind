@@ -12,7 +12,6 @@ const Registration = () => {
   const navigate = useNavigate()
 
   const isValidEmail = () => {
-    // Check if email ends with known domains
     if (
       email.endsWith("@gmail.com") ||
       email.endsWith("@yahoo.com") ||
