@@ -41,7 +41,7 @@ const LogIn = () => {
     }
 
     axios
-      .post("http://localhost:5000/logIn", {
+      .post("https://greenmind-2844.onrender.com/logIn", {
         userName: userName,
         email: email,
         password: password,

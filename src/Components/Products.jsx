@@ -8,7 +8,7 @@ const Products = ({ searchQuery }) => {
   const [plantsData, setPlantsData] = useState([]);
 
   useEffect(() => {
-    axios.post('http://localhost:5000/loadPlants')
+    axios.post('https://greenmind-2844.onrender.com/loadPlants')
       .then((response) => {
         setPlantsData(response.data);
       })

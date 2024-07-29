@@ -12,7 +12,7 @@ const PlantsCard = ({ imgURL, PlantsName, Price, cardId }) => {
 
   const handleAddToCart = ({ imgURL, PlantsName, Price }) => {
     axios
-      .post("http://localhost:5000/addToCart", {
+      .post("https://greenmind-2844.onrender.com/addToCart", {
         imgUrl: imgURL,
         plantsname: PlantsName,
         price: Price,
@@ -29,7 +29,7 @@ const PlantsCard = ({ imgURL, PlantsName, Price, cardId }) => {
 
   const handleDeleteProduct = ({ cardId }) => {
     axios
-      .post("http://localhost:5000/deleteProduct", {
+      .post("https://greenmind-2844.onrender.com/deleteProduct", {
         cardId: cardId,
       })
       .then((response) => {
