@@ -10,6 +10,7 @@ require("dotenv").config();
 
 const User = require("./User");
 const Products = require("./Products");
+const Comments = require("./Comments");
 
 const app = express();
 const PORT = 5000;
@@ -83,6 +84,7 @@ app.post("/register", async (req, res) => {
       password: hashedPassword,
       cart: [],
       role: "User",
+      comments: [],
     });
 
     await newUser.save();
@@ -228,10 +230,7 @@ app.post("/deleteProduct", async (req, res) => {
     await Products.findByIdAndDelete(cardId);
 
     // Delete from all users' carts
-    await User.updateMany(
-      {},
-      { $pull: { cart: { cardId: cardId } } }
-    );
+    await User.updateMany({}, { $pull: { cart: { cardId: cardId } } });
 
     res.status(200).send("Product deleted successfully");
   } catch (err) {
@@ -275,6 +274,108 @@ app.post("/updateUser", async (req, res) => {
   } catch (err) {
     console.log("Error updating user", err);
     res.status(500).send("Something went wrong while updating the user");
+  }
+});
+
+app.post("/addNewComment", async (req, res) => {
+  const { userName, profession, comment, rating, userId } = req.body;
+
+  try {
+    // Find the user by ID
+    const commentUser = await User.findById(userId);
+    if (!commentUser) {
+      return res.status(404).send("User not found");
+    }
+
+    // Create a new comment
+    const newComment = new Comments({
+      userName,
+      profession,
+      comment,
+      rating,
+      userId,
+    });
+
+    // Save the new comment
+    await newComment.save();
+
+    // Update the user's comments array with the new comment's ID
+    await User.findByIdAndUpdate(userId, {
+      $push: { comments: newComment._id },
+    });
+
+    res.status(200).send("Comment added successfully");
+  } catch (err) {
+    console.log("Something went wrong", err);
+    res.status(500).send("Something went wrong while adding new comment", err);
+  }
+});
+
+app.post("/loadComments", async (req, res) => {
+  try {
+    // Retrieve all comments from the Comments collection
+    const comments = await Comments.find({});
+
+    // Send the comments data as a JSON response
+    res.status(200).json(comments);
+  } catch (err) {
+    console.log("Error loading comments:", err);
+    res.status(500).send("Error loading comments");
+  }
+});
+
+app.post("/editComment", async (req, res) => {
+  const { editTxt, cardId } = req.body;
+
+  try {
+    // Find the comment by its ID and update its comment field
+    const updatedComment = await Comments.findByIdAndUpdate(cardId, {
+      comment: editTxt,
+    });
+
+    // Check if the comment was found and updated
+    if (!updatedComment) {
+      return res.status(404).send("Comment not found");
+    }
+
+    console.log(updatedComment);
+    res.status(200).send("Comment updated successfully");
+  } catch (err) {
+    console.log("Error changing comments:", err);
+    res.status(500).send("Error changing comments");
+  }
+});
+
+app.post("/deleteComment", async (req, res) => {
+  const { cardId } = req.body;
+
+  try {
+    // Convert cardId to ObjectId
+    const objectId = new mongoose.Types.ObjectId(cardId);
+
+    // Find the comment by its ID
+    const currentComment = await Comments.findById(objectId);
+
+    // Delete the comment
+    const deletedComment = await Comments.findByIdAndDelete(objectId);
+
+    // Check if the comment was found and deleted
+    if (!deletedComment) {
+      return res.status(404).send("Comment not found");
+    }
+
+    // Update the user's comments array to remove the deleted comment's ID
+    if (currentComment) {
+      await User.findByIdAndUpdate(
+        currentComment.userId,
+        { $pull: { comments: objectId } }
+      );
+    }
+
+    res.status(200).send("Comment deleted successfully");
+  } catch (err) {
+    console.log("Error deleting comment:", err);
+    res.status(500).send("Error deleting comment");
   }
 });
 

@@ -6,6 +6,7 @@ const User = new mongoose.Schema({
     password: String,
     cart: Array,
     role: String,
+    comments: []
 })
 
 module.exports = mongoose.model('User', User);

@@ -204,7 +204,12 @@ nav p:hover{
     }
 
     nav{
-        justify-content: space-evenly;
+        justify-content: space-between;
+        gap: 10px !important;
+    }
+
+    .navigation-words{
+        gap: 0;
     }
 }
 
