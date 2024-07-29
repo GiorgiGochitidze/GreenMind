@@ -49,7 +49,7 @@ const AddNewPlants = () => {
 
           setMessage('Succesfully added new Plant')
           setTimeout(() => {
-            navigate('/')
+            navigate('/Products')
             window.location.reload()
           }, 1100)
         })
