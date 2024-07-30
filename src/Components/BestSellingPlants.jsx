@@ -2,7 +2,7 @@ import "./CSS/bestsellingplants.css";
 import { HiArrowLongRight } from "react-icons/hi2";
 import PlantsList from "./PlantsList";
 import Products from "./Products";
-import { Link } from "react-scroll";
+import { Link } from "react-router-dom";
 
 const BestSellingPlants = ({ searchState, setSearchState, searchQuery }) => {
   return (

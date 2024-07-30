@@ -6,7 +6,7 @@ import naturalPlants from "../assets/naturalPlants.png";
 import artificialPlants from "../assets/artificialPlants.png";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { useMediaQuery } from "react-responsive";
-import { Link } from "react-scroll";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const isScreenWidth800 = useMediaQuery({ query: "(max-width: 956px)" });
