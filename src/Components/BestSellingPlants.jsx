@@ -2,6 +2,7 @@ import "./CSS/bestsellingplants.css";
 import { HiArrowLongRight } from "react-icons/hi2";
 import PlantsList from "./PlantsList";
 import Products from "./Products";
+import { Link } from "react-scroll";
 
 const BestSellingPlants = ({ searchState, setSearchState, searchQuery }) => {
   return (
@@ -13,11 +14,14 @@ const BestSellingPlants = ({ searchState, setSearchState, searchQuery }) => {
               Best Selling <br /> Plants
             </h1>
             <p style={{ color: "rgba(30, 30, 30)", opacity: "50%" }}>
-              Easiest way to <br /> healthy life by buying <br /> your favorite plants{" "}
+              Easiest way to <br /> healthy life by buying <br /> your favorite
+              plants{" "}
             </p>
-            <button className="seeMore-btn">
-              See More <HiArrowLongRight size={20} />
-            </button>
+            <Link style={{textDecoration: 'none', color: 'black'}} to="/Products">
+              <button className="seeMore-btn">
+                See More <HiArrowLongRight size={20} />
+              </button>
+            </Link>
           </div>
 
           <PlantsList />

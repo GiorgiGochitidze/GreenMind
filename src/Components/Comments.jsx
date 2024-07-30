@@ -60,7 +60,7 @@ const Comments = () => {
         "Please rate us, it's very important to know how you like our services"
       );
       setTimeout(() => {
-        setMessage(message);
+        setMessage("The empty fields will be set as Anonymous");
       }, 1500);
       return;
     }
@@ -68,7 +68,7 @@ const Comments = () => {
     if (!commentBody) {
       setMessage("Please fill the comment text field");
       setTimeout(() => {
-        setMessage(message);
+        setMessage("The empty fields will be set as Anonymous");
       }, 1500);
       return;
     }
@@ -105,7 +105,7 @@ const Comments = () => {
     }, 1500);
 
     setTimeout(() => {
-      setMessage(message);
+      setMessage("The empty fields will be set as Anonymous");
     }, 2000);
   };
 
@@ -168,7 +168,8 @@ const Comments = () => {
       </div>
 
       <div className="cards-list">
-        {commentsArray.map((card, index) => (
+        {commentsArray.length > 0 ? (
+          commentsArray.map((card, index) => (
             <CommentsCard
               body={card.comment}
               userName={card.userName}
@@ -177,7 +178,10 @@ const Comments = () => {
               key={index}
               cardId={card._id}
             />
-        ))}
+          ))
+        ) : (
+          <p>Comments doesn't exist or wait 50 seconds to load comments</p>
+        )}
       </div>
     </div>
   );

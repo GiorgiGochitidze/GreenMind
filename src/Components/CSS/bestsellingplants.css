@@ -29,6 +29,10 @@
     gap: 10px;
 }
 
+.seeMore-btn:hover{
+    cursor: pointer;
+}
+
 @media screen and (max-width: 570px) {
     .bestSellingPlants-container{
         flex-direction: column;
