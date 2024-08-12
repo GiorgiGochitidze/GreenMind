@@ -9,7 +9,7 @@ import paypal from "../assets/paypal.png";
 import { FaCcDiscover, FaCcVisa } from "react-icons/fa";
 import { TbArrowBigLeft } from "react-icons/tb";
 
-const PaymentForm = ({purchasheState, setPurchasheState}) => {
+const PaymentForm = ({purchasheState, paymentFormRef, setPurchasheState}) => {
   const { cardData } = useCardData();
   const [arrowColor, setArrowColor] = useState("black");
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -73,6 +73,7 @@ const PaymentForm = ({purchasheState, setPurchasheState}) => {
         initial={{ opacity: 0, y: 500 }}
         animate={{ opacity: 1, y: 0 }}
         className="paymentform-card"
+        ref={paymentFormRef}
       >
         <PaymentFirstStatus
           cardData={cardData}

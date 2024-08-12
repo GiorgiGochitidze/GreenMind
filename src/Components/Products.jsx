@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./CSS/products.css";
 import PlantsCard from "./PlantsCard";
 import Fuse from "fuse.js";
@@ -7,6 +7,23 @@ import PaymentForm from "./PaymentForm";
 
 const Products = ({ searchQuery, purchasheState, setPurchasheState }) => {
   const [plantsData, setPlantsData] = useState([]);
+  const paymentFormRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (paymentFormRef.current && !paymentFormRef.current.contains(event.target)) {
+        setPurchasheState(false);
+      }
+    };
+
+    // Add event listener for mousedown events
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [setPurchasheState]);
 
   useEffect(() => {
     axios.post('http://localhost:5000/loadPlants')
@@ -28,7 +45,7 @@ const Products = ({ searchQuery, purchasheState, setPurchasheState }) => {
 
   return (
     <div className="products-container">
-      {purchasheState && <PaymentForm setPurchasheState={setPurchasheState} purchasheState={purchasheState} />}
+      {purchasheState && <PaymentForm paymentFormRef={paymentFormRef} setPurchasheState={setPurchasheState} purchasheState={purchasheState} />}
       {results.length > 0 ? (
         results.map((plant, index) => (
           <PlantsCard
