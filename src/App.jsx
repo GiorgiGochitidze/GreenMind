@@ -9,15 +9,18 @@ import LogIn from "./Components/LogIn";
 import Cart from "./Components/Cart";
 import AddNewPlants from "./Components/AddNewPlants";
 import Footer from "./Components/Footer";
+import { useState } from "react";
 
 function App() {
+
+  const [purchasheState, setPurchasheState] = useState(false)
 
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Products" element={<Products />} />
+        <Route path="/" element={<Home purchasheState={purchasheState} setPurchasheState={setPurchasheState}/>} />
+        <Route path="/Products" element={<Products purchasheState={purchasheState} setPurchasheState={setPurchasheState} />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/LogIn" element={<LogIn />} />

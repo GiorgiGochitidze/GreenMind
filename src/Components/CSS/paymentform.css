@@ -1,0 +1,325 @@
+.paymentform-container{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    z-index: 5;
+    left: 0;
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.paymentform-card{
+    width: 800px;
+    height: 450px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-inline: 40px;
+    padding: 20px;
+    gap: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    padding-top: 70px;
+    flex-wrap: wrap;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.paymentform-card::-webkit-scrollbar{
+    display: none;
+}
+
+.payment-card p{
+    margin: 0 auto;
+}
+
+.billing-address{
+    width: 300px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.billing-address label{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.billing-address label input{
+    width: 100%;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-inline: 10px;
+    box-sizing: border-box;
+}
+
+.billing-address label input:focus{
+    outline: none;
+}
+
+.countryandzipcode{
+    flex-direction: row !important;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.countryandzipcode input, 
+.countryandzipcode select{
+    width: 130px !important;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.countryandzipcode select:focus{
+    outline: none;
+}
+
+.countryandzipcode div{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.nextpage-btn{
+    width: 100%;
+    min-height: 38px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: 0.2s all;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.nextpage-btn:hover{
+    cursor: pointer;
+    background-color: rgb(53, 53, 211);
+    color: white;
+    border: 0;
+}
+
+.pages-postion-container{
+    width: 100%;
+    height: 70px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.betweenLine{
+    width: 50px;
+    height: 5px;
+    background-color: rgb(117, 117, 250);
+}
+
+.page-circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scrollers-container{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 5;
+    height: 60px;
+    flex-direction: column;
+}
+
+.hinter-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 45px;
+    flex-direction: column;
+    background-color: #C1DCDC;
+    border-radius: 10px;
+    color: black;
+    cursor: default;
+}
+
+.payment-page-container{
+    width: 100%;
+    height: 400px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.payments-page-card{
+    width: 100%;
+    height: 300px;
+}
+
+.accepted-cards{
+    width: 100%;
+    min-height: 80px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-inputs-container{
+    width: 100%;
+    margin: 0 auto;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.payment-inputs-container div{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.payment-inputs-container label{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.payment-inputs-container input{
+    width: 100%;
+    min-height: 38px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: transparent;
+    padding-inline: 10px;
+    box-sizing: border-box;
+}
+
+.payment-inputs-container input:focus{
+    outline: none;
+}
+
+.purchashe-btn{
+    width: 200px;
+    height: 38px;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: 0.5s all;
+}
+
+.purchashe-btn:hover{
+    cursor: pointer;
+    background-color: rgb(53, 53, 211);
+    color: white;
+    border: 0;
+}
+
+.buttons-container{
+    width: 100%;
+}
+
+.goBack-btn{
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    width: 100px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: 0.2s all;
+}
+
+.goBack-btn:hover{
+    cursor: pointer;
+    background-color: rgb(53, 53, 211);
+    color: white;
+    border: 0;
+}
+
+@media screen and (max-width: 709px){
+    .billing-address{
+        text-align: center;
+    }
+
+    .scrollers-container{
+        display: flex;
+    }
+}
+
+@media screen and (min-width: 709px){
+    .scrollers-container{
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 392px){
+    .countryandzipcode{
+        flex-direction: column !important;
+    }
+
+    .scrollers-container{
+        display: none;
+    }
+
+    .paymentform-card{
+        height: 480px;
+        gap: 50px;
+    }
+
+    .plants-card{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .plants-card img{
+        width: 100%;
+    }
+}

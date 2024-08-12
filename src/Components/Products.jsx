@@ -3,8 +3,9 @@ import "./CSS/products.css";
 import PlantsCard from "./PlantsCard";
 import Fuse from "fuse.js";
 import axios from "axios";
+import PaymentForm from "./PaymentForm";
 
-const Products = ({ searchQuery }) => {
+const Products = ({ searchQuery, purchasheState, setPurchasheState }) => {
   const [plantsData, setPlantsData] = useState([]);
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const Products = ({ searchQuery }) => {
 
   return (
     <div className="products-container">
+      {purchasheState && <PaymentForm setPurchasheState={setPurchasheState} purchasheState={purchasheState} />}
       {results.length > 0 ? (
         results.map((plant, index) => (
           <PlantsCard
@@ -35,6 +37,8 @@ const Products = ({ searchQuery }) => {
             PlantsName={plant.plantsname} // Adjust the property name to match your data structure
             Price={plant.price} // Adjust the property name to match your data structure
             cardId={plant._id}
+            purchasheState={purchasheState}
+            setPurchasheState={setPurchasheState}
           />
         ))
       ) : (

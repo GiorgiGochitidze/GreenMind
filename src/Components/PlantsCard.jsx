@@ -3,12 +3,21 @@ import { PiShoppingCartSimpleLight } from "react-icons/pi";
 import { motion } from "framer-motion";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import { useCardData } from "./useCardData";
 
 const token = sessionStorage.getItem("token");
 const decoded = token ? jwtDecode(token) : "token doesnt exists";
 
-const PlantsCard = ({ imgURL, PlantsName, Price, cardId }) => {
+const PlantsCard = ({
+  imgURL,
+  PlantsName,
+  Price,
+  cardId,
+  purchasheState,
+  setPurchasheState,
+}) => {
   const [buyState, setBuyState] = useState(false);
+  const {handleGetCardData} = useCardData()
 
   const handleAddToCart = ({ imgURL, PlantsName, Price }) => {
     axios
@@ -40,8 +49,6 @@ const PlantsCard = ({ imgURL, PlantsName, Price, cardId }) => {
         console.log("something went wrong while deleting product", err);
       });
   };
-  
-  
 
   return (
     <div
@@ -64,7 +71,13 @@ const PlantsCard = ({ imgURL, PlantsName, Price, cardId }) => {
 
       {token && decoded.role === "Admin" && (
         <div className="del-icon">
-          <p onClick={() => handleDeleteProduct({imgURL, PlantsName, Price, cardId})}>X</p>
+          <p
+            onClick={() =>
+              handleDeleteProduct({ imgURL, PlantsName, Price, cardId })
+            }
+          >
+            X
+          </p>
         </div>
       )}
 
@@ -75,7 +88,14 @@ const PlantsCard = ({ imgURL, PlantsName, Price, cardId }) => {
           transition={{ duration: 0.1 }}
           className="buy-container"
         >
-          <button>Buy</button>
+          <button
+            onClick={() => {
+              setPurchasheState(!purchasheState);
+              handleGetCardData({ imgURL, Price, PlantsName, cardId });
+            }}
+          >
+            Buy
+          </button>
         </motion.div>
       )}
     </div>

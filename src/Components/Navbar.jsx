@@ -9,9 +9,7 @@ import { motion } from "framer-motion";
 import axios from "axios"; // Import axios for making HTTP requests
 
 const token = sessionStorage.getItem("token");
-const decoded = token
-  ? jwtDecode(token)
-  : { userId: null, userName: "", email: "" };
+const decoded = token ? jwtDecode(token) : 'token doesnt exists';
 
 const Navbar = () => {
   const [profile, setProfile] = useState(false);
@@ -23,14 +21,22 @@ const Navbar = () => {
   const profileRef = useRef(null);
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null);
-  const location = useLocation()
-  const currentPath = location.pathname
-
-  console.log(currentPath)
 
   const [indexVal, setIndexVal] = useState(() => {
     return parseInt(localStorage.getItem("activeNavIndex"), 10) || 0;
   });
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      localStorage.setItem("activeNavIndex", 0);
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("activeNavIndex", indexVal);
@@ -106,8 +112,8 @@ const Navbar = () => {
     }
 
     setTimeout(() => {
-      window.location.reload()
-    }, 1500)
+      window.location.reload();
+    }, 1500);
 
     try {
       const response = await axios.post("http://localhost:5000/updateUser", {
@@ -165,11 +171,7 @@ const Navbar = () => {
         </div>
 
         <div className="navigation-icons">
-          <Link
-            onClick={() => handleNavClick(4)}
-            to="/Cart"
-            style={linkStyle}
-          >
+          <Link onClick={() => handleNavClick(4)} to="/Cart" style={linkStyle}>
             <PiShoppingCartSimpleLight className="icons" size={25} />
           </Link>
           {!token && (
@@ -288,7 +290,7 @@ const Navbar = () => {
       {settings && (
         <div className="settings-container">
           <div className="settings-pad">
-            <h1 style={{margin: '0 auto'}}>Settings</h1>
+            <h1 style={{ margin: "0 auto" }}>Settings</h1>
             <label>
               Username:
               <input
@@ -316,10 +318,12 @@ const Navbar = () => {
                 placeholder="Change User Password"
               />
             </label>
-            {message && <p style={{textAlign: 'center'}}>{message}</p>}
-            <button className="saveChanges-btn" onClick={handleSaveChanges}>Save Changes</button>
+            {message && <p style={{ textAlign: "center" }}>{message}</p>}
+            <button className="saveChanges-btn" onClick={handleSaveChanges}>
+              Save Changes
+            </button>
             <button
-            className="saveChanges-btn"
+              className="saveChanges-btn"
               onClick={() => {
                 setSettings(false);
                 setUserName(decoded.userName);

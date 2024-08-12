@@ -6,7 +6,7 @@ import Categories from "./Categories";
 import Comments from "./Comments";
 import "./CSS/home.css";
 
-const Home = () => {
+const Home = ({purchasheState, setPurchasheState}) => {
   const [searchState, setSearchState] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -21,6 +21,8 @@ const Home = () => {
         searchState={searchState}
         setSearchState={setSearchState}
         searchQuery={searchQuery}
+        purchasheState={purchasheState}
+        setPurchasheState={setPurchasheState}
       />
       <AboutUs />
       <Categories />

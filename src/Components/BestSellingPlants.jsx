@@ -4,7 +4,7 @@ import PlantsList from "./PlantsList";
 import Products from "./Products";
 import { Link } from "react-router-dom";
 
-const BestSellingPlants = ({ searchState, setSearchState, searchQuery }) => {
+const BestSellingPlants = ({ searchState, purchasheState, searchQuery, setPurchasheState }) => {
   return (
     <div className="bestSellingPlants-container">
       {!searchState && (
@@ -24,7 +24,7 @@ const BestSellingPlants = ({ searchState, setSearchState, searchQuery }) => {
             </Link>
           </div>
 
-          <PlantsList />
+          <PlantsList setPurchasheState={setPurchasheState} purchasheState={purchasheState} />
         </>
       )}
 
