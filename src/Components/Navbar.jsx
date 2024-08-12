@@ -3,7 +3,7 @@ import "./CSS/navbar.css";
 import { PiShoppingCartSimpleLight } from "react-icons/pi";
 import MenuIcon from "../assets/menuicon.png";
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
 import axios from "axios"; // Import axios for making HTTP requests
@@ -23,6 +23,10 @@ const Navbar = () => {
   const profileRef = useRef(null);
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null);
+  const location = useLocation()
+  const currentPath = location.pathname
+
+  console.log(currentPath)
 
   const [indexVal, setIndexVal] = useState(() => {
     return parseInt(localStorage.getItem("activeNavIndex"), 10) || 0;
@@ -101,8 +105,12 @@ const Navbar = () => {
       return;
     }
 
+    setTimeout(() => {
+      window.location.reload()
+    }, 1500)
+
     try {
-      const response = await axios.post("https://greenmind-2844.onrender.com/updateUser", {
+      const response = await axios.post("http://localhost:5000/updateUser", {
         userId: decoded.userId,
         userName,
         email,
@@ -158,7 +166,7 @@ const Navbar = () => {
 
         <div className="navigation-icons">
           <Link
-            onClick={() => handleNavClick(null)}
+            onClick={() => handleNavClick(4)}
             to="/Cart"
             style={linkStyle}
           >
@@ -166,7 +174,7 @@ const Navbar = () => {
           </Link>
           {!token && (
             <Link
-              onClick={() => handleNavClick(null)}
+              onClick={() => handleNavClick(5)}
               style={linkStyle}
               to="/Registration"
             >
@@ -308,7 +316,7 @@ const Navbar = () => {
                 placeholder="Change User Password"
               />
             </label>
-            {message && <p>{message}</p>}
+            {message && <p style={{textAlign: 'center'}}>{message}</p>}
             <button className="saveChanges-btn" onClick={handleSaveChanges}>Save Changes</button>
             <button
             className="saveChanges-btn"

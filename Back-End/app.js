@@ -57,7 +57,7 @@ const randomString = generateRandomString(64);
 const uri = `mongodb+srv://greenmind2424:${dbUserPass}@greenmind.apcab2o.mongodb.net/?retryWrites=true&w=majority&appName=GreenMind`;
 
 mongoose
-  .connect(uri)
+  .connect('mongodb://localhost:27017/GreenMind')
   .then(() => {
     console.log("Connected MongoDB Successfully");
   })
@@ -98,10 +98,10 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/logIn", async (req, res) => {
-  const { userName, email, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ $or: [{ userName }, { email }] });
+    const user = await User.findOne({email});
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -118,6 +118,7 @@ app.post("/logIn", async (req, res) => {
     );
 
     res.status(200).json({ token });
+    console.log('User Logged In Successfully')
   } catch (err) {
     console.log("Error during login", err);
     res.status(500).send("Something went wrong during login");
@@ -128,9 +129,22 @@ app.post("/addToCart", async (req, res) => {
   const { userId, imgUrl, plantsname, price, cardId } = req.body;
 
   try {
-    await User.findByIdAndUpdate(userId, {
-      $push: { cart: { imgUrl, plantsname, price, cardId } },
-    });
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Check if the item already exists in the user's cart
+    const itemExists = user.cart.some(item => item.cardId === cardId);
+
+    if (itemExists) {
+      return res.status(400).send("Item already in cart");
+    }
+
+    // Add the item to the user's cart
+    user.cart.push({ imgUrl, plantsname, price, cardId });
+    await user.save();
 
     res.status(200).send("Successfully added to cart");
   } catch (err) {
@@ -138,6 +152,7 @@ app.post("/addToCart", async (req, res) => {
     res.status(500).send("Something went wrong while adding to the cart");
   }
 });
+
 
 app.post("/loadCart", async (req, res) => {
   const { userId } = req.body;
@@ -379,6 +394,17 @@ app.post("/deleteComment", async (req, res) => {
   }
 });
 
+app.post('/loadUsers', async (req, res) => {
+  try{
+    const loadedUsers = await User.find({})
+
+    res.status(200).json(loadedUsers)
+  }
+  catch(err) {
+    console.log("Error loading users:", err);
+    res.status(500).send("Error loading users");
+  }
+})
 
 app.get("/", (req, res) => {
   res.send(`<h1>Hello World</h1>`);

@@ -2,14 +2,14 @@ import { useState } from "react";
 import "./CSS/forms.css";
 import Form from "./Form";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate(); // Get the navigate function from react-router-dom
+  const navigate = useNavigate();
 
   const isValidEmail = () => {
     // Check if email ends with known domains
@@ -24,7 +24,7 @@ const LogIn = () => {
   };
 
   const handleLogIn = () => {
-    if (!userName || !email || !password) {
+    if (!email || !password) {
       setMessage("Please fill all fields");
       setTimeout(() => {
         setMessage("");
@@ -41,8 +41,7 @@ const LogIn = () => {
     }
 
     axios
-      .post("https://greenmind-2844.onrender.com/logIn", {
-        userName: userName,
+      .post("http://localhost:5000/logIn", {
         email: email,
         password: password,
       })

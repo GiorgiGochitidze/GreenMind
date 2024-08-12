@@ -15,7 +15,7 @@ const Cart = () => {
   useEffect(() => {
     if (token && decoded && decoded.userId) {
       axios
-        .post("https://greenmind-2844.onrender.com/loadCart", {
+        .post("http://localhost:5000/loadCart", {
           userId: decoded.userId,
         })
         .then((response) => {
@@ -29,7 +29,7 @@ const Cart = () => {
 
   const handleRemoveCart = ({plantsname, price, cardId}) => {
     axios
-      .post("https://greenmind-2844.onrender.com/removeFromCart", {
+      .post("http://localhost:5000/removeFromCart", {
         userId: decoded.userId,
         plantsname: plantsname,
         price: price,

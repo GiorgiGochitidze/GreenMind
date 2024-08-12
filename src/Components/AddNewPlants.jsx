@@ -28,7 +28,14 @@ const AddNewPlants = () => {
   };
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault();
+
+  if(!plantName || !plantPrice || !selectedFile){
+    setMessage('Please fill all inputs')
+    setTimeout(() => {
+      setMessage('')
+    }, 1500)
+    return
+  }    
 
     try {
       // Prepare form data
@@ -39,7 +46,7 @@ const AddNewPlants = () => {
 
       // Send POST request to backend (Cloudinary endpoint)
       await axios
-        .post("https://greenmind-2844.onrender.com/addNewPlant", formData, {
+        .post("http://localhost:5000/addNewPlant", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -97,6 +104,7 @@ const AddNewPlants = () => {
             onChange={(e) => setPlantPrice(e.target.value)}
           />
         </div>
+        {message && <p style={{margin: '0 auto'}}>{message}</p>}
         <button onClick={handleFormSubmit} className="upload-btn">
           Upload
         </button>

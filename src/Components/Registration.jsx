@@ -48,7 +48,7 @@ const Registration = () => {
       return;
     }
 
-    axios.post("https://greenmind-2844.onrender.com/register", {
+    axios.post("http://localhost:5000/register", {
         userName: userName,
         email: email,
         password: password,

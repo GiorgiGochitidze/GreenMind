@@ -1,10 +1,33 @@
 import "./CSS/banner.css";
 import bannerPart from "../assets/bannerPart.png";
 import { IoIosSearch } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const Banner = ({ setSearchState, searchState, setSearchQuery }) => {
+const Banner = ({ setSearchState, setSearchQuery }) => {
   const [inputVal, setInputVal] = useState("");
+  const [plantsData, setPlantsData] = useState([])
+  const [usersList, setUsersList] = useState([])
+
+  useEffect(() => {
+    axios.post('http://localhost:5000/loadPlants')
+      .then((response) => {
+        setPlantsData(response.data);
+      })
+      .catch((err) => {
+        console.log('Something went wrong while fetching plants data', err);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios.post('http://localhost:5000/loadUsers')
+      .then((response) => {
+        setUsersList(response.data);
+      })
+      .catch((err) => {
+        console.log('Something went wrong while fetching plants data', err);
+      });
+  }, []);
 
   return (
     <div className="banner-container">
@@ -23,13 +46,13 @@ const Banner = ({ setSearchState, searchState, setSearchQuery }) => {
 
           <div className="amounts-counterInfo">
             <p style={{ wordBreak: "keep-all" }}>
-              <span style={{ fontSize: "30px" }}>50+</span> <br /> plant species
+              <span style={{ fontSize: "30px" }}>{plantsData.length}</span> <br /> plant species
             </p>
 
             <div className="line"></div>
 
             <p>
-              <span style={{ fontSize: "30px" }}>100+</span> <br /> Customers
+              <span style={{ fontSize: "30px" }}>{usersList.length}</span> <br /> Customers
             </p>
           </div>
 
