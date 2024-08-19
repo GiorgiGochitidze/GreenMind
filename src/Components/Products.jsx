@@ -26,7 +26,7 @@ const Products = ({ searchQuery, purchasheState, setPurchasheState }) => {
   }, [setPurchasheState]);
 
   useEffect(() => {
-    axios.post('http://localhost:5000/loadPlants')
+    axios.post('https://greenmind-2844.onrender.com/loadPlants')
       .then((response) => {
         setPlantsData(response.data);
       })

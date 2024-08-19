@@ -1,5 +1,8 @@
 import { TbArrowBigRight } from "react-icons/tb";
 import { IoIosArrowDown } from "react-icons/io";
+import { IoCheckmarkDone } from "react-icons/io5";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 const PaymentFirstStatus = ({
   cardData,
@@ -16,7 +19,20 @@ const PaymentFirstStatus = ({
   CountrysList,
   setPage2,
   page2,
+  fullName,
+  email,
+  city,
+  address,
+  setFullName,
+  setEmail,
+  setAddress,
+  setCity,
+  payPosTrack,
+  setPurchasheState,
 }) => {
+
+  const [amount, setAmount] = useState(0)
+  
   return (
     <>
       <div
@@ -32,37 +48,44 @@ const PaymentFirstStatus = ({
           </p>
         </div>
       </div>
-      <div className="pages-postion-container">
-        <div
-          style={{
-            background: "#C1DCDC",
-            border: `5px solid rgb(117, 117, 250)`,
-          }}
-          className="page"
-        >
-          1
+      {payPosTrack && (
+        <div className="pages-postion-container">
+          <div
+            style={{
+              background: "#C1DCDC",
+              border: `5px solid rgb(117, 117, 250)`,
+            }}
+            className="page"
+          >
+            1
+          </div>
+          <div
+            className="betweenLine"
+            style={{
+              background: `${
+                borderColor !== "rgb(117, 117, 250)"
+                  ? "rgb(117, 117, 250)"
+                  : "lightgray"
+              }`,
+            }}
+          ></div>
+          <div
+            style={{
+              background: `${
+                borderColor === "rgb(117, 117, 250)" ? "white" : "#C1DCDC"
+              }`,
+              border: `5px solid ${
+                borderColor !== "rgb(117, 117, 250)"
+                  ? "rgb(117, 117, 250)"
+                  : "lightgray"
+              }`,
+            }}
+            className="page"
+          >
+            2
+          </div>
         </div>
-        <div className="betweenLine" style={{
-          background: `${
-            borderColor !== "rgb(117, 117, 250)" ? "rgb(117, 117, 250)" : "lightgray"
-          }`
-        }}></div>
-        <div
-          style={{
-            background: `${
-              borderColor === "rgb(117, 117, 250)" ? "white" : "#C1DCDC"
-            }`,
-            border: `5px solid ${
-              borderColor !== "rgb(117, 117, 250)"
-                ? "rgb(117, 117, 250)"
-                : "lightgray"
-            }`,
-          }}
-          className="page"
-        >
-          2
-        </div>
-      </div>
+      )}
       {page1 && (
         <div className="billing-address">
           <h2>BILLING ADDRESS</h2>
@@ -74,6 +97,8 @@ const PaymentFirstStatus = ({
               name="fullname"
               id="fullname"
               required
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
             />
           </label>
           <label htmlFor="email">
@@ -83,6 +108,8 @@ const PaymentFirstStatus = ({
               type="text"
               name="email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </label>
@@ -94,6 +121,8 @@ const PaymentFirstStatus = ({
               name="address"
               id="address"
               required
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </label>
           <label htmlFor="city">
@@ -104,6 +133,8 @@ const PaymentFirstStatus = ({
               type="text"
               name="city"
               id="city"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
             />
           </label>
           <label htmlFor="country" className="countryandzipcode">
@@ -140,20 +171,12 @@ const PaymentFirstStatus = ({
             </div>
           </label>
           <button
-            onMouseEnter={() =>
-              arrowColor === "black"
-                ? setArrowColor("white")
-                : setArrowColor("black")
-            }
-            onMouseLeave={() =>
-              arrowColor === "black"
-                ? setArrowColor("white")
-                : setArrowColor("black")
-            }
+            onMouseEnter={() => setArrowColor("white")}
+            onMouseLeave={() => setArrowColor("black")}
             onClick={() => {
               setBorderColor(null);
               setPage1(!page1);
-              setPage2(!page2)
+              setPage2(!page2);
             }}
             className="nextpage-btn"
           >
@@ -176,7 +199,45 @@ const PaymentFirstStatus = ({
             <p style={{ color: "1E1E1E", opacity: "50%" }}>
               ₾ {cardData.Price}
             </p>
+            <div className="product-amount-container">
+              <button onClick={() => {setAmount(amount => amount - 1)
+                if(amount < 1){
+                  setAmount(0)
+                }
+              }}><span>-</span></button>
+              <p>{amount}</p>
+              <button onClick={() => setAmount(amount => amount + 1)}><span>+</span></button>
+            </div>
           </div>
+        </div>
+      )}
+
+      {!payPosTrack && (
+        <div className="succesPayment-container">
+          <motion.div
+            initial={{ opacity: 0, y: -500 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="checkmark-circle"
+          >
+            <IoCheckmarkDone size={60} color="lime" />
+          </motion.div>
+          <motion.h2
+            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, y: -500 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            Payment Successful
+          </motion.h2>
+
+          <motion.button
+            transition={{ delay: 0.3 }}
+            initial={{ opacity: 0, y: -500 }}
+            animate={{ opacity: 1, y: 0 }}
+            onClick={() => setPurchasheState(false)}
+            className="close-btn"
+          >
+            close
+          </motion.button>
         </div>
       )}
     </>

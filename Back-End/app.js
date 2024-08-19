@@ -57,7 +57,7 @@ const randomString = generateRandomString(64);
 const uri = `mongodb+srv://greenmind2424:${dbUserPass}@greenmind.apcab2o.mongodb.net/?retryWrites=true&w=majority&appName=GreenMind`;
 
 mongoose
-  .connect('mongodb://localhost:27017/GreenMind')
+  .connect(uri)
   .then(() => {
     console.log("Connected MongoDB Successfully");
   })
@@ -204,6 +204,7 @@ app.post("/addNewPlant", upload.single("image"), async (req, res) => {
       imgUrl: result.secure_url,
       plantsname: plantName,
       price: plantPrice,
+      purchashes: 0
     });
 
     await newPlant.save();

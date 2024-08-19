@@ -1,15 +1,16 @@
 import "./CSS/paymentform.css";
 import { motion } from "framer-motion";
 import { useCardData } from "./useCardData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CountrysList from "./CountrysList";
 import PaymentFirstStatus from "./PaymentFirstStatus";
 import mastercard from "../assets/mastercard.png";
 import paypal from "../assets/paypal.png";
 import { FaCcDiscover, FaCcVisa } from "react-icons/fa";
 import { TbArrowBigLeft } from "react-icons/tb";
+import axios from "axios";
 
-const PaymentForm = ({purchasheState, paymentFormRef, setPurchasheState}) => {
+const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState }) => {
   const { cardData } = useCardData();
   const [arrowColor, setArrowColor] = useState("black");
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -19,6 +20,23 @@ const PaymentForm = ({purchasheState, paymentFormRef, setPurchasheState}) => {
   const [page2, setPage2] = useState(false);
   const [validThru, setValidThru] = useState("");
   const [cardNumber, setCardNumber] = useState("");
+  const [nameOnCard, setNameOnCard] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [cvc, setCvc] = useState("");
+  const [payPosTrack, setPayPosTrack] = useState(true)
+
+  useEffect(() => {
+    axios.post('https://greenmind-2844.onrender.com/loadPlants')
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((err) => {
+      console.log('Something went wrong while getting plants list data', err)
+    })
+  }, [])
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
@@ -26,47 +44,86 @@ const PaymentForm = ({purchasheState, paymentFormRef, setPurchasheState}) => {
 
   const handleZipCodeChange = (e) => {
     let value = e.target.value;
-
-    // Remove any non-digit characters
     value = value.replace(/\D/g, "");
-
-    // Insert a hyphen after the third character if the length is more than 3
     if (value.length > 5) {
       value = value.slice(0, 5) + "-" + value.slice(5);
     }
-
     setZipCode(value);
   };
 
-  const handlevalidThruChange = (e) => {
+  const handleValidThruChange = (e) => {
     let value = e.target.value;
-
-    // Remove any non-digit characters
     value = value.replace(/\D/g, "");
-
-    // Insert a hyphen after the third character if the length is more than 3
     if (value.length > 2) {
       value = value.slice(0, 2) + "/" + value.slice(2);
     }
-
     setValidThru(value);
   };
 
   const handleCardNumberChange = (e) => {
     let value = e.target.value;
-
-    // Remove any non-digit characters
     value = value.replace(/\D/g, "");
-
-    // Add a space after every 4 digits
     value = value.replace(/(.{4})/g, "$1 ");
-
-    // Remove any trailing space if it exists
     value = value.trim();
-
     setCardNumber(value);
   };
 
+  const handleSubmitPayment = () => {
+
+    // const allowedEmailProviders = [
+    //   '@gmail.com',
+    //   '@yahoo.com',
+    //   '@outlook.com',
+    //   '@hotmail.com',
+    //   '@icloud.com',
+    //   '@aol.com',
+    //   '@protonmail.com',
+    //   '@mail.com',
+    //   '@yandex.com',
+    //   '@zoho.com',
+    // ];
+  
+    // const isValidEmail = allowedEmailProviders.some(provider => email.endsWith(provider));
+  
+    // if (
+    //   !fullName ||
+    //   !email ||
+    //   !address ||
+    //   !city ||
+    //   !selectedCountry ||
+    //   !zipCode ||
+    //   !cardNumber ||
+    //   !nameOnCard ||
+    //   !validThru ||
+    //   !cvc ||
+    //   cardNumber.length < 19 ||
+    //   cvc.length < 3 ||
+    //   validThru.length < 5 ||
+    //   !isValidEmail
+    // ) {
+    //   setBorderColor("red");
+    //   setTimeout(() => {
+    //     setBorderColor("black");
+    //   }, 1000);
+    //   console.log('Please fill in all the fields correctly.');
+    //   return;
+    // }
+  
+    console.log('Purchase successful');
+    setPage2(false)
+    setPayPosTrack(false)
+
+    axios.post('https://greenmind-2844.onrender.com/sentCardPurchashes', {
+      amount: amount
+    })
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((err) => {
+      console.log('Something went wrong while sending purchashe amount', err)
+    })
+  };
+  
   return (
     <div className="paymentform-container">
       <motion.div
@@ -90,6 +147,16 @@ const PaymentForm = ({purchasheState, paymentFormRef, setPurchasheState}) => {
           CountrysList={CountrysList}
           page2={page2}
           setPage2={setPage2}
+          fullName={fullName}
+          setFullName={setFullName}
+          email={email}
+          setEmail={setEmail}
+          address={address}
+          setAddress={setAddress}
+          city={city}
+          setCity={setCity}
+          payPosTrack={payPosTrack}
+          setPurchasheState={setPurchasheState}
         />
 
         {page2 && (
@@ -99,11 +166,10 @@ const PaymentForm = ({purchasheState, paymentFormRef, setPurchasheState}) => {
                 onClick={() => {
                   setPage2(!page2);
                   setPage1(!page1);
-                  setBorderColor("rgb(117, 117, 250)")
+                  setBorderColor("rgb(117, 117, 250)");
                 }}
                 className="goBack-btn"
               >
-                {" "}
                 <TbArrowBigLeft /> Back
               </button>
             )}
@@ -140,6 +206,10 @@ const PaymentForm = ({purchasheState, paymentFormRef, setPurchasheState}) => {
                       type="text"
                       name="nameoncard"
                       id="nameoncard"
+                      value={nameOnCard}
+                      onChange={(e) => {
+                        setNameOnCard(e.target.value);
+                      }}
                     />
                   </label>
                   <label htmlFor="creditcardnum">
@@ -161,7 +231,7 @@ const PaymentForm = ({purchasheState, paymentFormRef, setPurchasheState}) => {
                     <input
                       maxLength={5}
                       value={validThru}
-                      onChange={handlevalidThruChange}
+                      onChange={handleValidThruChange}
                       type="text"
                       name="validthru"
                       id="validthru"
@@ -175,16 +245,25 @@ const PaymentForm = ({purchasheState, paymentFormRef, setPurchasheState}) => {
                       type="text"
                       name="cvc"
                       id="cvc"
+                      maxLength={3}
+                      value={cvc}
+                      onChange={(e) => setCvc(e.target.value)}
                     />
                   </label>
                 </div>
 
                 <div className="buttons-container">
-                  <button className="purchashe-btn submit">
-                    Sumbit Purchashe
+                  <button
+                    onClick={handleSubmitPayment}
+                    className="purchashe-btn submit"
+                  >
+                    Submit Purchase
                   </button>
-                  <button onClick={() => setPurchasheState(!purchasheState)} className="purchashe-btn cancel">
-                    Cancel Purchashe
+                  <button
+                    onClick={() => setPurchasheState(!purchasheState)}
+                    className="purchashe-btn cancel"
+                  >
+                    Cancel Purchase
                   </button>
                 </div>
               </div>

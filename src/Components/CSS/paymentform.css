@@ -282,6 +282,73 @@
     border: 0;
 }
 
+.succesPayment-container{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+    /* background-color: red; */
+    color: lime;
+}
+
+.checkmark-circle{
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 10px solid lime;
+    border-radius: 50%;
+}
+
+.close-btn{
+    width: 200px;
+    height: 38px;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.close-btn:hover{
+    cursor: pointer;
+}
+
+.product-amount-container{
+    min-width: 80px;
+    width: auto;
+    gap: 10px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.product-amount-container button{
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-amount-container button:hover{
+    cursor: pointer;
+}
+
+.product-amount-container button span{
+    margin-top: 1px;
+}
+
 @media screen and (max-width: 709px){
     .billing-address{
         text-align: center;
@@ -295,6 +362,10 @@
 @media screen and (min-width: 709px){
     .scrollers-container{
         display: none !important;
+    }
+
+    .paymentform-card{
+        overflow-y: hidden;
     }
 }
 

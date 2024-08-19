@@ -116,7 +116,7 @@ const Navbar = () => {
     }, 1500);
 
     try {
-      const response = await axios.post("http://localhost:5000/updateUser", {
+      const response = await axios.post("https://greenmind-2844.onrender.com/updateUser", {
         userId: decoded.userId,
         userName,
         email,
