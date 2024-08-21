@@ -10,7 +10,7 @@ const PlantsList = ({ purchasheState, setPurchasheState }) => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/loadPlants")
+      .post("https://greenmind-2844.onrender.com/loadPlants")
       .then((response) => {
         // Sort the data based on purchashes in descending order
         const sortedPlants = response.data.sort((a, b) => b.purchashes - a.purchashes);

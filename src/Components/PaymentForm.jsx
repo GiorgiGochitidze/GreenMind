@@ -103,7 +103,7 @@ const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState, cardDa
     
 
     axios
-      .post("http://localhost:5000/sentCardPurchashes", {
+      .post("https://greenmind-2844.onrender.com/sentCardPurchashes", {
         amount: amount,
         purchashes: cardData.purchashes,
         id: cardData.cardId
