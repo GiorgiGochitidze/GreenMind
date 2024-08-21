@@ -1,19 +1,21 @@
 import { useRef, useEffect, useState } from "react";
 import "./CSS/plantslist.css";
 import PaymentForm from "./PaymentForm";
-import PlantsCard from './PlantsCard';
+import PlantsCard from "./PlantsCard";
 import axios from "axios";
 
-const PlantsList = ({ purchasheState, setPurchasheState }) => {
+const PlantsList = ({ purchasheState, setPurchasheState, cardData }) => {
   const [topPlantsData, setTopPlantsData] = useState([]);
   const paymentFormRef = useRef(null);
 
   useEffect(() => {
     axios
-      .post("https://greenmind-2844.onrender.com/loadPlants")
+      .post("https://greenmind-2844.onrender.comloadPlants")
       .then((response) => {
         // Sort the data based on purchashes in descending order
-        const sortedPlants = response.data.sort((a, b) => b.purchashes - a.purchashes);
+        const sortedPlants = response.data.sort(
+          (a, b) => b.purchashes - a.purchashes
+        );
         // Limit the topPlantsData to only 3 items
         setTopPlantsData(sortedPlants.slice(0, 3));
       })
@@ -48,6 +50,7 @@ const PlantsList = ({ purchasheState, setPurchasheState }) => {
           paymentFormRef={paymentFormRef}
           purchasheState={purchasheState}
           setPurchasheState={setPurchasheState}
+          cardData={cardData}
         />
       )}
 

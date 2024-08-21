@@ -35,7 +35,7 @@ const Cart = ({ purchasheState, setPurchasheState }) => {
   useEffect(() => {
     if (token && decoded && decoded.userId) {
       axios
-        .post("https://greenmind-2844.onrender.com/loadCart", {
+        .post("https://greenmind-2844.onrender.comloadCart", {
           userId: decoded.userId,
         })
         .then((response) => {
@@ -49,7 +49,7 @@ const Cart = ({ purchasheState, setPurchasheState }) => {
 
   const handleRemoveCart = (cardId) => {
     axios
-      .post("https://greenmind-2844.onrender.com/removeFromCart", {
+      .post("https://greenmind-2844.onrender.comremoveFromCart", {
         userId: decoded.userId,
         cardId: cardId,
       })

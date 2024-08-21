@@ -46,7 +46,7 @@ const AddNewPlants = () => {
 
       // Send POST request to backend (Cloudinary endpoint)
       await axios
-        .post("https://greenmind-2844.onrender.com/addNewPlant", formData, {
+        .post("https://greenmind-2844.onrender.comaddNewPlant", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

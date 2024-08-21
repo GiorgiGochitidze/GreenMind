@@ -4,12 +4,10 @@ import PlantsCard from "./PlantsCard";
 import Fuse from "fuse.js";
 import axios from "axios";
 import PaymentForm from "./PaymentForm";
-import { useCardData } from "./useCardData"; // Import the custom hook
 
-const Products = ({ searchQuery, purchasheState, setPurchasheState }) => {
+const Products = ({ searchQuery, purchasheState, setPurchasheState, cardData }) => {
   const [plantsData, setPlantsData] = useState([]);
   const paymentFormRef = useRef(null);
-  const { cardData } = useCardData(); // Access the selected card data
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -25,7 +23,7 @@ const Products = ({ searchQuery, purchasheState, setPurchasheState }) => {
   }, [setPurchasheState]);
 
   useEffect(() => {
-    axios.post('https://greenmind-2844.onrender.com/loadPlants')
+    axios.post('https://greenmind-2844.onrender.comloadPlants')
       .then((response) => {
         setPlantsData(response.data);
       })

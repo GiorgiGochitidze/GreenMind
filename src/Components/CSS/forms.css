@@ -1,11 +1,12 @@
 .auth-container {
   width: 100%;
-  height: 559px;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 20px;
+  margin-bottom: 20px;
 }
 
 .form-container {

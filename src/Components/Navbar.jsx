@@ -16,7 +16,7 @@ const Navbar = () => {
   const [settings, setSettings] = useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState(false);
+  const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
   const profileRef = useRef(null);
   const [menu, setMenu] = useState(false);
@@ -29,13 +29,13 @@ const Navbar = () => {
     { name: "Contacts", path: "/ContactUs" },
   ];
 
-
   const determineActiveIndex = () => {
     const currentPath = location.pathname;
+    if (currentPath === "/Cart") return -1; // Special case for Cart
     const activeIndex = navList.findIndex((nav) => nav.path === currentPath);
     return activeIndex !== -1 ? activeIndex : 0;
   };
-  
+
   const [indexVal, setIndexVal] = useState(determineActiveIndex);
 
   useEffect(() => {
@@ -67,32 +67,30 @@ const Navbar = () => {
   }, [profile, menu]);
 
   const handleNavClick = (index) => {
-    setIndexVal(index);
+    if (index !== -1) { // Prevent updating indexVal for Cart
+      setIndexVal(index);
+      localStorage.setItem("activeNavIndex", index);
+    }
     setMenu(false);
     setProfile(false);
-    localStorage.setItem("activeNavIndex", index);
   };
 
   const linkStyle = {
     textDecoration: "none",
-    color: "black",
+    color: 'black',
   };
 
   const handleSaveChanges = async () => {
     if (!isValidEmail()) {
       setMessage("Incorrect email format");
-      setTimeout(() => {
-        setMessage("");
-      }, 1200);
+      setTimeout(() => setMessage(""), 1200);
       return;
     }
 
-    setTimeout(() => {
-      window.location.reload();
-    }, 1500);
+    setTimeout(() => window.location.reload(), 1500);
 
     try {
-      const response = await axios.post("https://greenmind-2844.onrender.com/updateUser", {
+      const response = await axios.post("https://greenmind-2844.onrender.comupdateUser", {
         userId: decoded.userId,
         userName,
         email,
@@ -126,7 +124,7 @@ const Navbar = () => {
               <Link
                 onClick={() => handleNavClick(index)}
                 style={{
-                  color: index === indexVal ? "black" : "rgba(30, 30, 30, 50%)",
+                  color: (location.pathname === "/Cart" ? "rgba(30, 30, 30, 50%)" : (index === indexVal ? "black" : "rgba(30, 30, 30, 50%)")),
                   textDecoration: "none",
                 }}
                 key={index}
@@ -139,12 +137,12 @@ const Navbar = () => {
         </div>
 
         <div className="navigation-icons">
-          <Link onClick={() => handleNavClick(4)} to="/Cart" style={linkStyle}>
+          <Link onClick={() => handleNavClick(-1)} to="/Cart" style={linkStyle}>
             <PiShoppingCartSimpleLight className="icons" size={25} />
           </Link>
           {!token && (
             <Link
-              onClick={() => handleNavClick(5)}
+              onClick={() => handleNavClick(-1)}
               style={linkStyle}
               to="/Registration"
             >
@@ -239,8 +237,7 @@ const Navbar = () => {
                     className="dropbox-items"
                     onClick={() => handleNavClick(index)}
                     style={{
-                      color:
-                        index === indexVal ? "black" : "rgba(30, 30, 30, 50%)",
+                      color: (location.pathname === "/Cart" ? "rgba(30, 30, 30, 50%)" : (index === indexVal ? "black" : "rgba(30, 30, 30, 50%)")),
                       textDecoration: "none",
                     }}
                     key={index}

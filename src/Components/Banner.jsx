@@ -10,7 +10,7 @@ const Banner = ({ setSearchState, setSearchQuery }) => {
   const [usersList, setUsersList] = useState([])
 
   useEffect(() => {
-    axios.post('https://greenmind-2844.onrender.com/loadPlants')
+    axios.post('https://greenmind-2844.onrender.comloadPlants')
       .then((response) => {
         setPlantsData(response.data);
       })
@@ -20,7 +20,7 @@ const Banner = ({ setSearchState, setSearchQuery }) => {
   }, []);
 
   useEffect(() => {
-    axios.post('https://greenmind-2844.onrender.com/loadUsers')
+    axios.post('https://greenmind-2844.onrender.comloadUsers')
       .then((response) => {
         setUsersList(response.data);
       })

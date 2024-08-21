@@ -10,9 +10,13 @@ import Cart from "./Components/Cart";
 import AddNewPlants from "./Components/AddNewPlants";
 import Footer from "./Components/Footer";
 import { useState } from "react";
+import { useCardData } from "./Components/useCardData";
+
+// https://greenmind-2844.onrender.com 
 
 function App() {
   const [purchasheState, setPurchasheState] = useState(false);
+  const {cardData} = useCardData()
 
   return (
     <Router>
@@ -33,6 +37,7 @@ function App() {
             <Products
               purchasheState={purchasheState}
               setPurchasheState={setPurchasheState}
+              cardData={cardData}
             />
           }
         />

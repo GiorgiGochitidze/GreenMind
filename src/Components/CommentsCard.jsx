@@ -39,7 +39,7 @@ const CommentsCard = ({ body, userName, userProfession, rating, cardId }) => {
     }
 
     axios
-      .post("https://greenmind-2844.onrender.com/editComment", { editTxt, cardId })
+      .post("https://greenmind-2844.onrender.comeditComment", { editTxt, cardId })
       .then((response) => {
         setMessage("Edits saved successfully");
         console.log(response.data);
@@ -61,7 +61,7 @@ const CommentsCard = ({ body, userName, userProfession, rating, cardId }) => {
   };
 
   const handleCommentDelete = () => {
-    axios.post('https://greenmind-2844.onrender.com/deleteComment', { cardId })
+    axios.post('https://greenmind-2844.onrender.comdeleteComment', { cardId })
       .then((response) => {
         console.log(response.data);
         console.log('card deleted');

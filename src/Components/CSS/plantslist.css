@@ -33,7 +33,6 @@
     border: 1px solid black;
     border-radius: 50%;
     position: absolute;
-    right: 55px;
     top: 10px;
     display: flex;
     justify-content: center;
@@ -107,6 +106,35 @@
     background-color: black;
     transform: rotate(45deg);
     border-radius: 20px;
+}
+
+.edit-icon{
+    position: absolute;
+    top: 3px;
+    left: 95px;
+    color: gray;
+}
+
+.edit-inputs{
+    width: 130px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-inline: 10px;
+    background-color: transparent;
+}
+
+.edit-inputs:focus{
+    outline: none;
+}
+
+.edit-btn{
+    width: 120px;
+    height: 28px;
+    margin-top: -5px;
+    margin-left: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: transparent;
 }
 
 @media screen and (max-width: 300px) {
