@@ -6,53 +6,43 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
-import axios from "axios"; // Import axios for making HTTP requests
+import axios from "axios";
 
 const token = sessionStorage.getItem("token");
-const decoded = token ? jwtDecode(token) : 'token doesnt exists';
+const decoded = token ? jwtDecode(token) : "token doesnt exists";
 
 const Navbar = () => {
   const [profile, setProfile] = useState(false);
   const [settings, setSettings] = useState(false);
-  const [userName, setUserName] = useState(decoded.userName);
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(false);
   const [password, setPassword] = useState("");
   const profileRef = useRef(null);
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null);
+  const location = useLocation();
+  
+  const navList = [
+    { name: "Home", path: "/" },
+    { name: "Products", path: "/Products" },
+    { name: "Contacts", path: "/ContactUs" },
+  ];
 
-  const [indexVal, setIndexVal] = useState(() => {
-    return parseInt(localStorage.getItem("activeNavIndex"), 10) || 0;
-  });
 
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      localStorage.setItem("activeNavIndex", 0);
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("activeNavIndex", indexVal);
-  }, [indexVal]);
-
-  const isValidEmail = () => {
-    // Check if email ends with known domains
-    if (
-      email.endsWith("@gmail.com") ||
-      email.endsWith("@yahoo.com") ||
-      email.endsWith("@hotmail.com")
-    ) {
-      return true;
-    }
-    return false;
+  const determineActiveIndex = () => {
+    const currentPath = location.pathname;
+    const activeIndex = navList.findIndex((nav) => nav.path === currentPath);
+    return activeIndex !== -1 ? activeIndex : 0;
   };
+  
+  const [indexVal, setIndexVal] = useState(determineActiveIndex);
+
+  useEffect(() => {
+    const activeIndex = determineActiveIndex();
+    setIndexVal(activeIndex);
+    localStorage.setItem("activeNavIndex", activeIndex);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleClickOutsideProfile = (event) => {
@@ -67,17 +57,8 @@ const Navbar = () => {
       }
     };
 
-    if (profile) {
-      document.addEventListener("mousedown", handleClickOutsideProfile);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutsideProfile);
-    }
-
-    if (menu) {
-      document.addEventListener("mousedown", handleClickOutsideMenu);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutsideMenu);
-    }
+    document.addEventListener("mousedown", handleClickOutsideProfile);
+    document.addEventListener("mousedown", handleClickOutsideMenu);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideProfile);
@@ -89,18 +70,13 @@ const Navbar = () => {
     setIndexVal(index);
     setMenu(false);
     setProfile(false);
+    localStorage.setItem("activeNavIndex", index);
   };
 
   const linkStyle = {
     textDecoration: "none",
     color: "black",
   };
-
-  const navList = [
-    { name: "Home", path: "/" },
-    { name: "Products", path: "/Products" },
-    { name: "Contacts", path: "/ContactUs" },
-  ];
 
   const handleSaveChanges = async () => {
     if (!isValidEmail()) {
@@ -116,7 +92,7 @@ const Navbar = () => {
     }, 1500);
 
     try {
-      const response = await axios.post("https://greenmind-2844.onrender.com/updateUser", {
+      const response = await axios.post("http://localhost:5000/updateUser", {
         userId: decoded.userId,
         userName,
         email,
@@ -133,15 +109,7 @@ const Navbar = () => {
     <header>
       <nav>
         <div className="navigation-words">
-          <Link
-            onClick={() => {
-              setTimeout(() => {
-                window.location.reload();
-              }, 400);
-            }}
-            style={linkStyle}
-            to="/"
-          >
+          <Link onClick={() => handleNavClick(0)} style={linkStyle} to="/">
             <h1
               style={{
                 color: "#1E1E1E",
@@ -315,24 +283,11 @@ const Navbar = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Change User Password"
+                placeholder="New Password"
               />
             </label>
-            {message && <p style={{ textAlign: "center" }}>{message}</p>}
-            <button className="saveChanges-btn" onClick={handleSaveChanges}>
-              Save Changes
-            </button>
-            <button
-              className="saveChanges-btn"
-              onClick={() => {
-                setSettings(false);
-                setUserName(decoded.userName);
-                setEmail(decoded.email);
-                setPassword("");
-              }}
-            >
-              Cancel
-            </button>
+            <button onClick={handleSaveChanges}>Save Changes</button>
+            <div>{message}</div>
           </div>
         </div>
       )}

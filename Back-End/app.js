@@ -57,7 +57,7 @@ const randomString = generateRandomString(64);
 const uri = `mongodb+srv://greenmind2424:${dbUserPass}@greenmind.apcab2o.mongodb.net/?retryWrites=true&w=majority&appName=GreenMind`;
 
 mongoose
-  .connect(uri)
+  .connect("mongodb://localhost:27017/GreenMind")
   .then(() => {
     console.log("Connected MongoDB Successfully");
   })
@@ -101,7 +101,7 @@ app.post("/logIn", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -118,7 +118,7 @@ app.post("/logIn", async (req, res) => {
     );
 
     res.status(200).json({ token });
-    console.log('User Logged In Successfully')
+    console.log("User Logged In Successfully");
   } catch (err) {
     console.log("Error during login", err);
     res.status(500).send("Something went wrong during login");
@@ -136,7 +136,7 @@ app.post("/addToCart", async (req, res) => {
     }
 
     // Check if the item already exists in the user's cart
-    const itemExists = user.cart.some(item => item.cardId === cardId);
+    const itemExists = user.cart.some((item) => item.cardId === cardId);
 
     if (itemExists) {
       return res.status(400).send("Item already in cart");
@@ -153,24 +153,49 @@ app.post("/addToCart", async (req, res) => {
   }
 });
 
-
 app.post("/loadCart", async (req, res) => {
   const { userId } = req.body;
 
   try {
+    // Find the user and their cart
     const user = await User.findById(userId);
 
     if (!user) {
       console.log("User not found");
-      res.status(404).send("User not found");
+      return res.status(404).send("User not found");
     }
 
-    res.status(200).json(user.cart);
+    // Extract card IDs from the user's cart
+    const cardIds = user.cart.map(item => item.cardId);
+
+    // Fetch card details for each card ID
+    const cards = await Products.find({ _id: { $in: cardIds } });
+
+    // Create a map of card ID to card details
+    const cardMap = cards.reduce((map, card) => {
+      map[card._id.toString()] = card;
+      return map;
+    }, {});
+
+    // Combine card data with user's cart items
+    const detailedCartItems = user.cart.map(cartItem => {
+      const card = cardMap[cartItem.cardId.toString()];
+      return {
+        ...cartItem,
+        imgUrl: card.imgUrl,
+        price: card.price,
+        plantsname: card.plantsname,
+        purchashes: card.purchashes
+      };
+    });
+
+    res.status(200).json(detailedCartItems);
   } catch (err) {
     console.log(err);
     res.status(500).send("Something went wrong while fetching the cart");
   }
 });
+
 
 app.post("/removeFromCart", async (req, res) => {
   const { userId, plantsname, price, cardId } = req.body;
@@ -204,7 +229,7 @@ app.post("/addNewPlant", upload.single("image"), async (req, res) => {
       imgUrl: result.secure_url,
       plantsname: plantName,
       price: plantPrice,
-      purchashes: 0
+      purchashes: 0,
     });
 
     await newPlant.save();
@@ -217,7 +242,10 @@ app.post("/addNewPlant", upload.single("image"), async (req, res) => {
 
 app.post("/loadPlants", async (req, res) => {
   try {
-    const plants = await Products.find({}, "imgUrl plantsname price");
+    const plants = await Products.find(
+      {},
+      "imgUrl plantsname price purchashes"
+    );
     res.status(200).json(plants);
   } catch (err) {
     console.error("Error loading plants:", err);
@@ -382,10 +410,9 @@ app.post("/deleteComment", async (req, res) => {
 
     // Update the user's comments array to remove the deleted comment's ID
     if (currentComment) {
-      await User.findByIdAndUpdate(
-        currentComment.userId,
-        { $pull: { comments: objectId } }
-      );
+      await User.findByIdAndUpdate(currentComment.userId, {
+        $pull: { comments: objectId },
+      });
     }
 
     res.status(200).send("Comment deleted successfully");
@@ -395,17 +422,39 @@ app.post("/deleteComment", async (req, res) => {
   }
 });
 
-app.post('/loadUsers', async (req, res) => {
-  try{
-    const loadedUsers = await User.find({})
+app.post("/loadUsers", async (req, res) => {
+  try {
+    const loadedUsers = await User.find({});
 
-    res.status(200).json(loadedUsers)
-  }
-  catch(err) {
+    res.status(200).json(loadedUsers);
+  } catch (err) {
     console.log("Error loading users:", err);
     res.status(500).send("Error loading users");
   }
-})
+});
+
+app.post("/sentCardPurchashes", async (req, res) => {
+  const { amount, id } = req.body; // Extract amount and id from the request body
+
+  try {
+    // Find the product by ID and update its purchashes by incrementing with the amount
+    const updatedProduct = await Products.findByIdAndUpdate(
+      id, 
+      { $inc: { purchashes: amount } }, // Increment the purchashes field by the given amount
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).send("Product not found");
+    }
+
+    res.status(200).send('purchashed successfully') // Send the updated product data as a response
+  } catch (err) {
+    console.log("Error updating purchases:", err);
+    res.status(500).send("Error updating product purchases");
+  }
+});
+
 
 app.get("/", (req, res) => {
   res.send(`<h1>Hello World</h1>`);

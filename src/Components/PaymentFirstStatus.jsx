@@ -2,7 +2,6 @@ import { TbArrowBigRight } from "react-icons/tb";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
 const PaymentFirstStatus = ({
   cardData,
@@ -29,10 +28,9 @@ const PaymentFirstStatus = ({
   setCity,
   payPosTrack,
   setPurchasheState,
+  amount,
+  setAmount,
 }) => {
-
-  const [amount, setAmount] = useState(0)
-  
   return (
     <>
       <div
@@ -196,17 +194,13 @@ const PaymentFirstStatus = ({
               alt="naturalPlant"
             />
             <p>{cardData.PlantsName}</p>
-            <p style={{ color: "1E1E1E", opacity: "50%" }}>
+            <p style={{ color: "#1E1E1E", opacity: "50%" }}>
               ₾ {cardData.Price}
             </p>
             <div className="product-amount-container">
-              <button onClick={() => {setAmount(amount => amount - 1)
-                if(amount < 1){
-                  setAmount(0)
-                }
-              }}><span>-</span></button>
+              <button disabled={amount < 1} onClick={() => setAmount(amount => amount - 1)}><span>-</span></button>
               <p>{amount}</p>
-              <button onClick={() => setAmount(amount => amount + 1)}><span>+</span></button>
+              <button disabled={amount > 9} onClick={() => setAmount(amount => amount + 1)}><span>+</span></button>
             </div>
           </div>
         </div>

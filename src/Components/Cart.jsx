@@ -1,39 +1,57 @@
 import { jwtDecode } from "jwt-decode";
 import "./CSS/cart.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { PiShoppingCartSimpleLight } from "react-icons/pi";
+import PaymentForm from "./PaymentForm";
+import { useCardData } from "./useCardData";
 
-const Cart = () => {
+const Cart = ({ purchasheState, setPurchasheState }) => {
   const token = sessionStorage.getItem("token");
   const decoded = token ? jwtDecode(token) : null;
+  const paymentFormRef = useRef(null);
 
   const [cartList, setCartList] = useState([]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const { handleGetCardData, cardData } = useCardData();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        paymentFormRef.current &&
+        !paymentFormRef.current.contains(event.target)
+      ) {
+        setPurchasheState(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setPurchasheState]);
 
   useEffect(() => {
     if (token && decoded && decoded.userId) {
       axios
-        .post("https://greenmind-2844.onrender.com/loadCart", {
+        .post("http://localhost:5000/loadCart", {
           userId: decoded.userId,
         })
         .then((response) => {
           setCartList(response.data);
         })
         .catch((err) => {
-          console.log("something went wrong while loading cart data", err);
+          console.log("Something went wrong while loading cart data", err);
         });
     }
   }, []);
 
-  const handleRemoveCart = ({plantsname, price, cardId}) => {
+  const handleRemoveCart = (cardId) => {
     axios
-      .post("https://greenmind-2844.onrender.com/removeFromCart", {
+      .post("http://localhost:5000/removeFromCart", {
         userId: decoded.userId,
-        plantsname: plantsname,
-        price: price,
-        cardId: cardId
+        cardId: cardId,
       })
       .then((response) => {
         setCartList(response.data);
@@ -54,12 +72,9 @@ const Cart = () => {
             onMouseLeave={() => setHoveredIndex(null)}
           >
             {token && (
-              <div style={{right: "15px"}} className="cart-icon">
+              <div style={{ right: "15px" }} className="cart-icon">
                 <PiShoppingCartSimpleLight
-                  onClick={() => {
-                    handleRemoveCart({plantsname: item.plantsname, price: item.price, cardId: item._id})
-                    window.location.reload()
-                }}
+                  onClick={() => handleRemoveCart(item._id)}
                   size={15}
                 />
                 <div className="line-close"></div>
@@ -67,7 +82,7 @@ const Cart = () => {
             )}
             <img className="plant-img" src={item.imgUrl} alt="naturalPlant" />
             <p>{item.plantsname}</p>
-            <p style={{ color: "1E1E1E", opacity: "50%" }}>₾ {item.price}</p>
+            <p style={{ color: "#1E1E1E", opacity: "50%" }}>₾ {item.price}</p>
 
             {hoveredIndex === index && (
               <motion.div
@@ -76,13 +91,34 @@ const Cart = () => {
                 transition={{ duration: 0.1 }}
                 className="buy-container"
               >
-                <button>Buy</button>
+                <button
+                  onClick={() => {
+                    setPurchasheState(!purchasheState);
+                    handleGetCardData({
+                      imgURL: item.imgUrl, // Use imgURL here
+                      Price: item.price,
+                      PlantsName: item.plantsname,
+                      cardId: item._id,
+                      purchashes: item.purchashes,
+                    });
+                  }}
+                >
+                  Buy
+                </button>
               </motion.div>
             )}
           </div>
         ))
       ) : (
-        <p style={{fontFamily: "Poppins"}}>No items in cart</p>
+        <p style={{ fontFamily: "Poppins" }}>No items in cart</p>
+      )}
+      {purchasheState && (
+        <PaymentForm
+          paymentFormRef={paymentFormRef}
+          purchasheState={purchasheState}
+          setPurchasheState={setPurchasheState}
+          cardData={cardData}
+        />
       )}
     </div>
   );

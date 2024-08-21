@@ -27,7 +27,7 @@ const Comments = () => {
 
   useEffect(() => {
     axios
-      .post("https://greenmind-2844.onrender.com/loadComments/")
+      .post("http://localhost:5000/loadComments/")
       .then((response) => {
         console.log(response.data);
         setCommentsArray(response.data);
@@ -79,7 +79,7 @@ const Comments = () => {
     setMessage("Comment added Successfully");
 
     axios
-      .post("https://greenmind-2844.onrender.com/addNewComment/", {
+      .post("http://localhost:5000/addNewComment/", {
         userName: finalUserName,
         profession: finalProfession,
         rating,

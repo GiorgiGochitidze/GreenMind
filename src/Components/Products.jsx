@@ -4,10 +4,12 @@ import PlantsCard from "./PlantsCard";
 import Fuse from "fuse.js";
 import axios from "axios";
 import PaymentForm from "./PaymentForm";
+import { useCardData } from "./useCardData"; // Import the custom hook
 
 const Products = ({ searchQuery, purchasheState, setPurchasheState }) => {
   const [plantsData, setPlantsData] = useState([]);
   const paymentFormRef = useRef(null);
+  const { cardData } = useCardData(); // Access the selected card data
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -16,17 +18,14 @@ const Products = ({ searchQuery, purchasheState, setPurchasheState }) => {
       }
     };
 
-    // Add event listener for mousedown events
     document.addEventListener('mousedown', handleClickOutside);
-
-    // Cleanup the event listener on component unmount
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [setPurchasheState]);
 
   useEffect(() => {
-    axios.post('https://greenmind-2844.onrender.com/loadPlants')
+    axios.post('http://localhost:5000/loadPlants')
       .then((response) => {
         setPlantsData(response.data);
       })
@@ -45,15 +44,24 @@ const Products = ({ searchQuery, purchasheState, setPurchasheState }) => {
 
   return (
     <div className="products-container">
-      {purchasheState && <PaymentForm paymentFormRef={paymentFormRef} setPurchasheState={setPurchasheState} purchasheState={purchasheState} />}
+      {purchasheState && cardData && (
+        <PaymentForm 
+          purchashes={cardData.purchashes} 
+          paymentFormRef={paymentFormRef} 
+          cardData={cardData}
+          setPurchasheState={setPurchasheState} 
+          purchasheState={purchasheState} 
+        />
+      )}
       {results.length > 0 ? (
         results.map((plant, index) => (
           <PlantsCard
             key={index}
-            imgURL={plant.imgUrl} // Adjust the property name to match your data structure
-            PlantsName={plant.plantsname} // Adjust the property name to match your data structure
-            Price={plant.price} // Adjust the property name to match your data structure
+            imgURL={plant.imgUrl}
+            PlantsName={plant.plantsname}
+            Price={plant.price}
             cardId={plant._id}
+            purchashes={plant.purchashes}
             purchasheState={purchasheState}
             setPurchasheState={setPurchasheState}
           />

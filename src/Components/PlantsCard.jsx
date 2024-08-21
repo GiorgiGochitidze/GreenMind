@@ -14,19 +14,21 @@ const PlantsCard = ({
   Price,
   cardId,
   purchasheState,
+  purchashes,
   setPurchasheState,
 }) => {
   const [buyState, setBuyState] = useState(false);
-  const {handleGetCardData} = useCardData()
+  const { handleGetCardData } = useCardData();
 
-  const handleAddToCart = ({ imgURL, PlantsName, Price }) => {
+  const handleAddToCart = ({ imgURL, PlantsName, Price, purchashes }) => {
     axios
-      .post("https://greenmind-2844.onrender.com/addToCart", {
+      .post("http://localhost:5000/addToCart", {
         imgUrl: imgURL,
         plantsname: PlantsName,
         price: Price,
         userId: decoded.userId,
         cardId: cardId,
+        purchashes: purchashes,
       })
       .then((response) => {
         console.log(response.data);
@@ -38,7 +40,7 @@ const PlantsCard = ({
 
   const handleDeleteProduct = ({ cardId }) => {
     axios
-      .post("https://greenmind-2844.onrender.com/deleteProduct", {
+      .post("http://localhost:5000/deleteProduct", {
         cardId: cardId,
       })
       .then((response) => {
@@ -91,7 +93,13 @@ const PlantsCard = ({
           <button
             onClick={() => {
               setPurchasheState(!purchasheState);
-              handleGetCardData({ imgURL, Price, PlantsName, cardId });
+              handleGetCardData({
+                imgURL,
+                Price,
+                PlantsName,
+                cardId,
+                purchashes,
+              });
             }}
           >
             Buy

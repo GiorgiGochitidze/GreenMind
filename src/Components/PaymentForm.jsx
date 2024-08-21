@@ -1,6 +1,5 @@
 import "./CSS/paymentform.css";
 import { motion } from "framer-motion";
-import { useCardData } from "./useCardData";
 import { useEffect, useState } from "react";
 import CountrysList from "./CountrysList";
 import PaymentFirstStatus from "./PaymentFirstStatus";
@@ -10,8 +9,8 @@ import { FaCcDiscover, FaCcVisa } from "react-icons/fa";
 import { TbArrowBigLeft } from "react-icons/tb";
 import axios from "axios";
 
-const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState }) => {
-  const { cardData } = useCardData();
+const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState, cardData }) => {
+  // const { cardData } = useCardData();
   const [arrowColor, setArrowColor] = useState("black");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [zipCode, setZipCode] = useState("");
@@ -26,17 +25,8 @@ const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState }) => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [cvc, setCvc] = useState("");
-  const [payPosTrack, setPayPosTrack] = useState(true)
-
-  useEffect(() => {
-    axios.post('https://greenmind-2844.onrender.com/loadPlants')
-    .then((response) => {
-      console.log(response.data)
-    })
-    .catch((err) => {
-      console.log('Something went wrong while getting plants list data', err)
-    })
-  }, [])
+  const [payPosTrack, setPayPosTrack] = useState(true);
+  const [amount, setAmount] = useState(0);
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
@@ -69,7 +59,6 @@ const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState }) => {
   };
 
   const handleSubmitPayment = () => {
-
     // const allowedEmailProviders = [
     //   '@gmail.com',
     //   '@yahoo.com',
@@ -82,9 +71,9 @@ const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState }) => {
     //   '@yandex.com',
     //   '@zoho.com',
     // ];
-  
+
     // const isValidEmail = allowedEmailProviders.some(provider => email.endsWith(provider));
-  
+
     // if (
     //   !fullName ||
     //   !email ||
@@ -108,22 +97,25 @@ const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState }) => {
     //   console.log('Please fill in all the fields correctly.');
     //   return;
     // }
-  
-    console.log('Purchase successful');
-    setPage2(false)
-    setPayPosTrack(false)
 
-    axios.post('https://greenmind-2844.onrender.com/sentCardPurchashes', {
-      amount: amount
-    })
-    .then((response) => {
-      console.log(response.data)
-    })
-    .catch((err) => {
-      console.log('Something went wrong while sending purchashe amount', err)
-    })
+    setPage2(false);
+    setPayPosTrack(false);
+    
+
+    axios
+      .post("http://localhost:5000/sentCardPurchashes", {
+        amount: amount,
+        purchashes: cardData.purchashes,
+        id: cardData.cardId
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log("Something went wrong while sending purchashe amount", err);
+      });
   };
-  
+
   return (
     <div className="paymentform-container">
       <motion.div
@@ -157,6 +149,8 @@ const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState }) => {
           setCity={setCity}
           payPosTrack={payPosTrack}
           setPurchasheState={setPurchasheState}
+          amount={amount}
+          setAmount={setAmount}
         />
 
         {page2 && (

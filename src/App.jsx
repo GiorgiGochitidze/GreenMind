@@ -12,19 +12,34 @@ import Footer from "./Components/Footer";
 import { useState } from "react";
 
 function App() {
-
-  const [purchasheState, setPurchasheState] = useState(false)
+  const [purchasheState, setPurchasheState] = useState(false);
 
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home purchasheState={purchasheState} setPurchasheState={setPurchasheState}/>} />
-        <Route path="/Products" element={<Products purchasheState={purchasheState} setPurchasheState={setPurchasheState} />} />
+        <Route
+          path="/"
+          element={
+            <Home
+              purchasheState={purchasheState}
+              setPurchasheState={setPurchasheState}
+            />
+          }
+        />
+        <Route
+          path="/Products"
+          element={
+            <Products
+              purchasheState={purchasheState}
+              setPurchasheState={setPurchasheState}
+            />
+          }
+        />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/LogIn" element={<LogIn />} />
-        <Route path="/Cart" element={<Cart />} />
+        <Route path="/Cart" element={<Cart purchasheState={purchasheState} setPurchasheState={setPurchasheState} />} />
         <Route path="/AddNewPlants" element={<AddNewPlants />} />
       </Routes>
       <Footer />
