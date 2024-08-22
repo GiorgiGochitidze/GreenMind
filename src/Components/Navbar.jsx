@@ -90,7 +90,7 @@ const Navbar = () => {
     setTimeout(() => window.location.reload(), 1500);
 
     try {
-      const response = await axios.post("https://greenmind-2844.onrender.comupdateUser", {
+      const response = await axios.post("https://greenmind-2844.onrender.com/updateUser", {
         userId: decoded.userId,
         userName,
         email,
@@ -283,7 +283,8 @@ const Navbar = () => {
                 placeholder="New Password"
               />
             </label>
-            <button onClick={handleSaveChanges}>Save Changes</button>
+            <button className="saveChanges-btn" onClick={handleSaveChanges}>Save Changes</button>
+            <button className="saveChanges-btn" onClick={() => setSettings(false)}>Cancel</button>
             <div>{message}</div>
           </div>
         </div>

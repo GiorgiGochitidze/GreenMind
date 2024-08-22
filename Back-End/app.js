@@ -57,7 +57,7 @@ const randomString = generateRandomString(64);
 const uri = `mongodb+srv://greenmind2424:${dbUserPass}@greenmind.apcab2o.mongodb.net/?retryWrites=true&w=majority&appName=GreenMind`;
 
 mongoose
-  .connect("mongodb://localhost:27017/GreenMind")
+  .connect(uri)
   .then(() => {
     console.log("Connected MongoDB Successfully");
   })
@@ -166,7 +166,7 @@ app.post("/loadCart", async (req, res) => {
     }
 
     // Extract card IDs from the user's cart
-    const cardIds = user.cart.map(item => item.cardId);
+    const cardIds = user.cart.map((item) => item.cardId);
 
     // Fetch card details for each card ID
     const cards = await Products.find({ _id: { $in: cardIds } });
@@ -178,14 +178,14 @@ app.post("/loadCart", async (req, res) => {
     }, {});
 
     // Combine card data with user's cart items
-    const detailedCartItems = user.cart.map(cartItem => {
+    const detailedCartItems = user.cart.map((cartItem) => {
       const card = cardMap[cartItem.cardId.toString()];
       return {
         ...cartItem,
         imgUrl: card.imgUrl,
         price: card.price,
         plantsname: card.plantsname,
-        purchashes: card.purchashes
+        purchashes: card.purchashes,
       };
     });
 
@@ -195,7 +195,6 @@ app.post("/loadCart", async (req, res) => {
     res.status(500).send("Something went wrong while fetching the cart");
   }
 });
-
 
 app.post("/removeFromCart", async (req, res) => {
   const { userId, plantsname, price, cardId } = req.body;
@@ -439,7 +438,7 @@ app.post("/sentCardPurchashes", async (req, res) => {
   try {
     // Find the product by ID and update its purchashes by incrementing with the amount
     const updatedProduct = await Products.findByIdAndUpdate(
-      id, 
+      id,
       { $inc: { purchashes: amount } }, // Increment the purchashes field by the given amount
       { new: true } // Return the updated document
     );
@@ -448,12 +447,33 @@ app.post("/sentCardPurchashes", async (req, res) => {
       return res.status(404).send("Product not found");
     }
 
-    res.status(200).send('purchashed successfully') // Send the updated product data as a response
+    res.status(200).send("purchashed successfully"); // Send the updated product data as a response
   } catch (err) {
     console.log("Error updating purchases:", err);
     res.status(500).send("Error updating product purchases");
   }
 });
+
+app.post("/editPlantCard", async (req, res) => {
+  const { newPlantName, newPlantPrice, cardId } = req.body;
+
+  try {
+    // Create an object with conditional properties
+    const updateFields = {
+      ...(newPlantName && { plantsname: newPlantName }),
+      ...(newPlantPrice && { price: newPlantPrice })
+    };
+
+    // Update the card only with the fields that are provided
+    const currentCard = await Products.findByIdAndUpdate(cardId, updateFields);
+
+    res.status(200).send('Card Changed Successfully');
+  } catch (err) {
+    console.log("Error editing card:", err);
+    res.status(500).send("Error editing card");
+  }
+});
+
 
 
 app.get("/", (req, res) => {

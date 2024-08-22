@@ -23,7 +23,7 @@ const Products = ({ searchQuery, purchasheState, setPurchasheState, cardData }) 
   }, [setPurchasheState]);
 
   useEffect(() => {
-    axios.post('https://greenmind-2844.onrender.comloadPlants')
+    axios.post('https://greenmind-2844.onrender.com/loadPlants')
       .then((response) => {
         setPlantsData(response.data);
       })

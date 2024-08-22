@@ -12,7 +12,7 @@ import Footer from "./Components/Footer";
 import { useState } from "react";
 import { useCardData } from "./Components/useCardData";
 
-// https://greenmind-2844.onrender.com 
+// https://greenmind-2844.onrender.com   
 
 function App() {
   const [purchasheState, setPurchasheState] = useState(false);

@@ -10,7 +10,7 @@ const PlantsList = ({ purchasheState, setPurchasheState, cardData }) => {
 
   useEffect(() => {
     axios
-      .post("https://greenmind-2844.onrender.comloadPlants")
+      .post("https://greenmind-2844.onrender.com/loadPlants")
       .then((response) => {
         // Sort the data based on purchashes in descending order
         const sortedPlants = response.data.sort(
