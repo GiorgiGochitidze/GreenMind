@@ -59,44 +59,44 @@ const PaymentForm = ({ purchasheState, paymentFormRef, setPurchasheState, cardDa
   };
 
   const handleSubmitPayment = () => {
-    // const allowedEmailProviders = [
-    //   '@gmail.com',
-    //   '@yahoo.com',
-    //   '@outlook.com',
-    //   '@hotmail.com',
-    //   '@icloud.com',
-    //   '@aol.com',
-    //   '@protonmail.com',
-    //   '@mail.com',
-    //   '@yandex.com',
-    //   '@zoho.com',
-    // ];
+    const allowedEmailProviders = [
+      '@gmail.com',
+      '@yahoo.com',
+      '@outlook.com',
+      '@hotmail.com',
+      '@icloud.com',
+      '@aol.com',
+      '@protonmail.com',
+      '@mail.com',
+      '@yandex.com',
+      '@zoho.com',
+    ];
 
-    // const isValidEmail = allowedEmailProviders.some(provider => email.endsWith(provider));
+    const isValidEmail = allowedEmailProviders.some(provider => email.endsWith(provider));
 
-    // if (
-    //   !fullName ||
-    //   !email ||
-    //   !address ||
-    //   !city ||
-    //   !selectedCountry ||
-    //   !zipCode ||
-    //   !cardNumber ||
-    //   !nameOnCard ||
-    //   !validThru ||
-    //   !cvc ||
-    //   cardNumber.length < 19 ||
-    //   cvc.length < 3 ||
-    //   validThru.length < 5 ||
-    //   !isValidEmail
-    // ) {
-    //   setBorderColor("red");
-    //   setTimeout(() => {
-    //     setBorderColor("black");
-    //   }, 1000);
-    //   console.log('Please fill in all the fields correctly.');
-    //   return;
-    // }
+    if (
+      !fullName ||
+      !email ||
+      !address ||
+      !city ||
+      !selectedCountry ||
+      !zipCode ||
+      !cardNumber ||
+      !nameOnCard ||
+      !validThru ||
+      !cvc ||
+      cardNumber.length < 19 ||
+      cvc.length < 3 ||
+      validThru.length < 5 ||
+      !isValidEmail
+    ) {
+      setBorderColor("red");
+      setTimeout(() => {
+        setBorderColor("black");
+      }, 1000);
+      console.log('Please fill in all the fields correctly.');
+      return;
+    }
 
     setPage2(false);
     setPayPosTrack(false);

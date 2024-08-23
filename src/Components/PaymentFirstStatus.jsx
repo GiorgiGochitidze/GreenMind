@@ -185,7 +185,7 @@ const PaymentFirstStatus = ({
           <h2 style={{ marginBottom: "20px", textAlign: "center" }}>
             Your Product:
           </h2>
-          <div className="plants-card payment-card">
+          <div className="plants-card payment-card responsiveVal">
             <img
               className="plant-img"
               src={cardData.imgURL}
