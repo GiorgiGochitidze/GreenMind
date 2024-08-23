@@ -87,7 +87,7 @@ const Comments = () => {
         userId: decoded.userId,
       })
       .then((response) => {
-        console.log(response.data);
+        setCommentsArray(response.data)
       })
       .catch((err) => {
         console.log("Something went wrong while sending comment data", err);

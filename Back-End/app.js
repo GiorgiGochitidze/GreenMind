@@ -55,6 +55,7 @@ const generateRandomString = (length) => {
 const randomString = generateRandomString(64);
 
 const uri = `mongodb+srv://greenmind2424:${dbUserPass}@greenmind.apcab2o.mongodb.net/?retryWrites=true&w=majority&appName=GreenMind`;
+const mongoLocal = "mongodb://localhost:27017/GreenMind"
 
 mongoose
   .connect(uri)
