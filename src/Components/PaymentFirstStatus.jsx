@@ -1,11 +1,9 @@
-import { TbArrowBigRight } from "react-icons/tb";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { motion } from "framer-motion";
 
 const PaymentFirstStatus = ({
   cardData,
-  arrowColor,
   selectedCountry,
   zipCode,
   borderColor,
@@ -178,7 +176,7 @@ const PaymentFirstStatus = ({
             }}
             className="nextpage-btn"
           >
-            Next <TbArrowBigRight color={arrowColor} />
+            Next
           </button>
         </div>
       )}

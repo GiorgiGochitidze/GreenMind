@@ -25,7 +25,7 @@ const Banner = ({ setSearchState, setSearchQuery }) => {
         setUsersList(response.data);
       })
       .catch((err) => {
-        console.log('Something went wrong while fetching plants data', err);
+        console.log('Something went wrong while fetching users data', err);
       });
   }, []);
 
