@@ -88,7 +88,6 @@
 
 .send-btn:hover{
     cursor: pointer;
-    border: 1px solid lawngreen;
 }
 
 @media screen and (max-width: 435px) {
