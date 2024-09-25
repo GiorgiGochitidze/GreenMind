@@ -11,6 +11,7 @@ import AddNewPlants from "./Components/AddNewPlants";
 import Footer from "./Components/Footer";
 import { useState } from "react";
 import { useCardData } from "./Components/useCardData";   
+import TechWorks from "./Components/TechWorks";
 
 function App() {
   const [purchasheState, setPurchasheState] = useState(false);
@@ -44,6 +45,7 @@ function App() {
         <Route path="/LogIn" element={<LogIn />} />
         <Route path="/Cart" element={<Cart purchasheState={purchasheState} setPurchasheState={setPurchasheState} />} />
         <Route path="/AddNewPlants" element={<AddNewPlants />} />
+        <Route path="/TechWorks" element={<TechWorks />} />
       </Routes>
       <Footer />
     </Router>

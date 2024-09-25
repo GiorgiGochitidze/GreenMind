@@ -63,7 +63,7 @@ const Registration = () => {
     })
     .catch((err) => {
         console.log('Something went wrong while sending registration data', err)
-        setMessage("Failed to log in check all fields");
+        setMessage("Failed to Register check all fields");
         setTimeout(() => {
           setMessage('')
         }, 1200);

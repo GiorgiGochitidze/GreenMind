@@ -142,7 +142,7 @@ const PlantsCard = ({
       {token && (
         <div
           className="cart-icon"
-          style={{ right: decoded.role === "Admin" ? "95px" : "15px" }}
+          style={{ right: decoded.role === "Admin" ? "95px" : "50px" }}
         >
           <GoPencil
             onClick={() => {

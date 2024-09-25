@@ -31,6 +31,7 @@ footer{
     align-items: center;
     overflow: hidden;
     color: rgba(30, 30, 30, 75%);
+    cursor: pointer;
 }
 
 .social-links{
