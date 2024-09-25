@@ -67,7 +67,7 @@ const Navbar = () => {
   }, [profile, menu]);
 
   const handleNavClick = (index) => {
-    if (index !== -1) { // Prevent updating indexVal for Cart
+    if (index !== -1) {
       setIndexVal(index);
       localStorage.setItem("activeNavIndex", index);
     }
@@ -96,7 +96,7 @@ const Navbar = () => {
         email,
         password,
       });
-      setMessage(response.data); // Display the response message
+      setMessage(response.data);
     } catch (err) {
       console.error("Error updating user:", err);
       setMessage("Error updating user");
