@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <footer>
       <div className="socialLinks-container">
-        <h1 style={{ fontFamily: "Advent-pro", color: "black" }}>GREENMIND</h1>
+        <h1 style={{ fontFamily: "Advent-pro", color: "black" }}>MelinaMShop</h1>
         <p>
           we help you find <br /> your dream plant
         </p>
@@ -51,7 +51,7 @@ const Footer = () => {
         </div>
 
         <p className="rights-txt">
-          2024 all Right Reserved Term of use GREENMIND
+          2024 all Right Reserved Term of use MelinaMShop
         </p>
       </div>
 

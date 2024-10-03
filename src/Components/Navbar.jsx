@@ -115,7 +115,7 @@ const Navbar = () => {
                 fontFamily: "Advent-Pro",
               }}
             >
-              GREENMIND
+              MelinaMShop
             </h1>
           </Link>
 
