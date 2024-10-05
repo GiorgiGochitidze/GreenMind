@@ -22,9 +22,9 @@ const AboutUs = () => {
         />
         <CriteriumsCard
           IconName={BsBoxSeam}
-          txtTitle={"Fast & Free Shipping"}
+          txtTitle={"Fast Shipping"}
           cardTxt={
-            "4-day or less delivery time, free shipping and an expedited delivery option."
+            "1 to 3-day delivery time in adjara and around 5 days delivery time outside of adjara, free delivery in batumi, outside of batumi price of delivery depends on location"
           }
         />
         <CriteriumsCard

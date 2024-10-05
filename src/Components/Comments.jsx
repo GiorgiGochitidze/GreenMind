@@ -112,7 +112,7 @@ const Comments = () => {
   return (
     <div className="comments-container">
       <h1 style={{ textAlign: "center" }}>
-        What customers say about <br /> GREEMIND?
+        What customers say about <br /> MelinaMShop?
       </h1>
 
       <div className="comment-input-container">

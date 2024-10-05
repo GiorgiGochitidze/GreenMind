@@ -92,6 +92,7 @@ const Footer = () => {
             <p>Blog</p>
           </Link>
         </div>
+        
         <div className="company downlist">
           <Link
             onClick={() => {
@@ -138,7 +139,7 @@ const Footer = () => {
             <p>Our Story</p>
           </Link>
         </div>
-        <div className="contact downlist">
+        <div className="Help downlist">
           <Link
             onClick={() => {
               setTimeout(() => {
@@ -148,7 +149,7 @@ const Footer = () => {
             to="/TechWorks"
             style={LinkStyles}
           >
-            <p style={{ color: "black" }}>Contact</p>
+            <p style={{ color: "black" }}>Help</p>
           </Link>
           <Link
             onClick={() => {
@@ -159,7 +160,18 @@ const Footer = () => {
             to="/TechWorks"
             style={LinkStyles}
           >
-            <p>Getting Started</p>
+            <p>Privacy & Policy</p>
+          </Link>
+          <Link
+            onClick={() => {
+              setTimeout(() => {
+                window.location.reload();
+              }, 0.5);
+            }}
+            to="/Terms"
+            style={LinkStyles}
+          >
+            <p style={{width: "180px"}}>Terms & Conditions</p>
           </Link>
           <Link
             onClick={() => {
@@ -170,20 +182,10 @@ const Footer = () => {
             to="/TechWorks"
             style={LinkStyles}
           >
-            <p>Pricing</p>
-          </Link>
-          <Link
-            onClick={() => {
-              setTimeout(() => {
-                window.location.reload();
-              }, 0.5);
-            }}
-            to="/TechWorks"
-            style={LinkStyles}
-          >
-            <p>Resources</p>
+            <p>Contact Us</p>
           </Link>
         </div>
+        
       </div>
     </footer>
   );

@@ -75,6 +75,8 @@ const Navbar = () => {
     setProfile(false);
   };
 
+  const isValidPath = ["/", "/Products", "/ContactUs"].includes(location.pathname);
+
   const linkStyle = {
     textDecoration: "none",
     color: 'black',
@@ -124,7 +126,9 @@ const Navbar = () => {
               <Link
                 onClick={() => handleNavClick(index)}
                 style={{
-                  color: (location.pathname === "/Cart" ? "rgba(30, 30, 30, 50%)" : (index === indexVal ? "black" : "rgba(30, 30, 30, 50%)")),
+                  color: isValidPath
+                    ? (index === indexVal ? "black" : "rgba(30, 30, 30, 50%)")
+                    : "rgba(30, 30, 30, 50%)", // Default color when not on the allowed paths
                   textDecoration: "none",
                 }}
                 key={index}

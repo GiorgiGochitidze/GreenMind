@@ -11,3 +11,11 @@ html{
   font-family: 'Advent-Pro';
   src: url('./Components/CSS/Fonts/AdventProNormal.ttf') ;
 }
+@font-face {
+  font-family: 'GeorgianFont';
+  src: url('./Components/CSS/Fonts/bpg_extrasquare_mtavruli_2009.ttf') ;
+}
+@font-face {
+  font-family: 'smth';
+  src: url('./Components/CSS/Fonts/bpg_algeti.otf') ;
+}

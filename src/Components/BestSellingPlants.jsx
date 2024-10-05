@@ -19,7 +19,7 @@ const BestSellingPlants = ({
         <>
           <div className="goToAllItems-container">
             <h1>
-              Best Selling <br /> Plants
+              Best Selling <br /> Products
             </h1>
             <p style={{ color: "rgba(30, 30, 30)", opacity: "50%" }}>
               Easiest way to <br /> healthy life by buying <br /> your favorite
