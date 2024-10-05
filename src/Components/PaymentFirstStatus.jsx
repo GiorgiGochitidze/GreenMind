@@ -191,7 +191,7 @@ const PaymentFirstStatus = ({
               src={cardData.imgURL}
               alt="naturalPlant"
             />
-            <p>{cardData.PlantsName}</p>
+            <p style={{fontFamily: 'GeorgianFont'}}>{cardData.PlantsName}</p>
             <p style={{ color: "#1E1E1E", opacity: "50%" }}>
               ₾ {cardData.Price}
             </p>

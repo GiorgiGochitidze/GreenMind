@@ -81,7 +81,7 @@ const Cart = ({ purchasheState, setPurchasheState }) => {
               </div>
             )}
             <img className="plant-img" src={item.imgUrl} alt="naturalPlant" />
-            <p>{item.plantsname}</p>
+            <p style={{fontFamily: 'GeorgianFont'}}>{item.plantsname}</p>
             <p style={{ color: "#1E1E1E", opacity: "50%" }}>₾ {item.price}</p>
 
             {hoveredIndex === index && (

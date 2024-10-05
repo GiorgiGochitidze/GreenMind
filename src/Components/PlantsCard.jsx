@@ -98,7 +98,7 @@ const PlantsCard = ({
       className="plants-card"
     >
       <img className="plant-img" src={imgURL} alt="naturalPlant" />
-      {!editState && <p>{PlantsName}</p>}
+      {!editState && <p style={{fontFamily: 'GeorgianFont'}}>{PlantsName}</p>}
       {editState && (
         <input
           className="edit-inputs"
