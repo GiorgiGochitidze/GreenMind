@@ -224,7 +224,8 @@ app.post("/addNewPlant", upload.single("image"), async (req, res) => {
     // Upload image to Cloudinary
     const result = await cloudinary.uploader.upload(path, { folder: "plants" });
 
-    const plantPrice = plantPrice1 == "1-500-მდე" ? plantPrice1 : plantPrice2
+    // Set plantPrice based on plantPrice1 or default to 0
+    const plantPrice = plantPrice1 === "1-500-მდე" ? plantPrice1 : 0;
 
     // Save new plant to MongoDB
     const newPlant = new Products({
@@ -243,6 +244,7 @@ app.post("/addNewPlant", upload.single("image"), async (req, res) => {
     res.status(500).json({ message: "Failed to add plant" });
   }
 });
+
 
 app.post("/loadPlants", async (req, res) => {
   try {
