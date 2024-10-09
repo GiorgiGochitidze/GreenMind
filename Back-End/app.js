@@ -217,12 +217,14 @@ app.post("/removeFromCart", async (req, res) => {
 });
 
 app.post("/addNewPlant", upload.single("image"), async (req, res) => {
+  const { plantName, plantPrice1, plantPrice2, amount, codenum } = req.body;
   try {
-    const { plantName, plantPrice } = req.body;
     const { path } = req.file; // Path to temporary uploaded file
 
     // Upload image to Cloudinary
     const result = await cloudinary.uploader.upload(path, { folder: "plants" });
+
+    const plantPrice = plantPrice1 == "1-500-მდე" ? plantPrice1 : plantPrice2
 
     // Save new plant to MongoDB
     const newPlant = new Products({
@@ -230,6 +232,8 @@ app.post("/addNewPlant", upload.single("image"), async (req, res) => {
       plantsname: plantName,
       price: plantPrice,
       purchashes: 0,
+      amount: amount,
+      codenum: codenum
     });
 
     await newPlant.save();

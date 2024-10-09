@@ -97,7 +97,7 @@
     overflow: hidden;
     border-radius: 12px;
     display: flex;
-    align-items: start;
+    align-items: center;
     flex-direction: column;
     gap: 30px;
     position: relative;
@@ -110,4 +110,26 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+}
+
+.itemsAmount-container{
+    width: 90%;
+    height: 40px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 20px;
+}
+
+.itemsAmount-container button{
+    width: auto;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid #303f9f;
+    padding-inline: 5px;
+    font-size: 12px;
+    border-radius: 5px;
 }

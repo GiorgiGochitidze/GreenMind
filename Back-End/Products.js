@@ -6,6 +6,8 @@ const Products = new mongoose.Schema({
     price: Number,
     cloudinaryId: { type: String },
     purchashes: Number,
+    amount: String,
+    codenum: String,
 })
 
 module.exports = mongoose.model('Products', Products)
