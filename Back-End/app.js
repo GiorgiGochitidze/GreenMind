@@ -18,6 +18,13 @@ const PORT = 5000;
 app.use(express.json());
 app.use(cors());
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    message: err.message || "Internal Server Error",
+  });
+});
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -55,7 +62,7 @@ const generateRandomString = (length) => {
 const randomString = generateRandomString(64);
 
 const uri = `mongodb+srv://greenmind2424:${dbUserPass}@greenmind.apcab2o.mongodb.net/?retryWrites=true&w=majority&appName=GreenMind`;
-const mongoLocal = "mongodb://localhost:27017/GreenMind"
+const mongoLocal = "mongodb://localhost:27017/GreenMind";
 
 mongoose
   .connect(uri)
@@ -127,7 +134,8 @@ app.post("/logIn", async (req, res) => {
 });
 
 app.post("/addToCart", async (req, res) => {
-  const { userId, imgUrl, plantsname, price, cardId } = req.body;
+  const { userId, imgUrl, plantsname, price1, price2, cardId, amount } =
+    req.body;
 
   try {
     const user = await User.findById(userId);
@@ -144,7 +152,14 @@ app.post("/addToCart", async (req, res) => {
     }
 
     // Add the item to the user's cart
-    user.cart.push({ imgUrl, plantsname, price, cardId });
+    user.cart.push({
+      imgUrl,
+      plantsname,
+      cardId,
+      price1,
+      price2,
+      amount,
+    });
     await user.save();
 
     res.status(200).send("Successfully added to cart");
@@ -184,7 +199,9 @@ app.post("/loadCart", async (req, res) => {
       return {
         ...cartItem,
         imgUrl: card.imgUrl,
-        price: card.price,
+        price1: card.price1,
+        price2: card.price2,
+        amount: card.amount,
         plantsname: card.plantsname,
         purchashes: card.purchashes,
       };
@@ -225,16 +242,16 @@ app.post("/addNewPlant", upload.single("image"), async (req, res) => {
     const result = await cloudinary.uploader.upload(path, { folder: "plants" });
 
     // Set plantPrice based on plantPrice1 or default to 0
-    const plantPrice = plantPrice1 === "1-500-მდე" ? plantPrice1 : 0;
 
     // Save new plant to MongoDB
     const newPlant = new Products({
       imgUrl: result.secure_url,
       plantsname: plantName,
-      price: plantPrice,
+      price1: plantPrice1,
+      price2: plantPrice2,
       purchashes: 0,
       amount: amount,
-      codenum: codenum
+      codenum: codenum,
     });
 
     await newPlant.save();
@@ -245,13 +262,9 @@ app.post("/addNewPlant", upload.single("image"), async (req, res) => {
   }
 });
 
-
 app.post("/loadPlants", async (req, res) => {
   try {
-    const plants = await Products.find(
-      {},
-      "imgUrl plantsname price purchashes"
-    );
+    const plants = await Products.find({});
     res.status(200).json(plants);
   } catch (err) {
     console.error("Error loading plants:", err);
@@ -468,20 +481,18 @@ app.post("/editPlantCard", async (req, res) => {
     // Create an object with conditional properties
     const updateFields = {
       ...(newPlantName && { plantsname: newPlantName }),
-      ...(newPlantPrice && { price: newPlantPrice })
+      ...(newPlantPrice && { price: newPlantPrice }),
     };
 
     // Update the card only with the fields that are provided
     const currentCard = await Products.findByIdAndUpdate(cardId, updateFields);
 
-    res.status(200).send('Card Changed Successfully');
+    res.status(200).send("Card Changed Successfully");
   } catch (err) {
     console.log("Error editing card:", err);
     res.status(500).send("Error editing card");
   }
 });
-
-
 
 app.get("/", (req, res) => {
   res.send(`<h1>Hello World</h1>`);

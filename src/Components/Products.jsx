@@ -5,30 +5,41 @@ import Fuse from "fuse.js";
 import axios from "axios";
 import PaymentForm from "./PaymentForm";
 
-const Products = ({ searchQuery, purchasheState, setPurchasheState, cardData }) => {
+const Products = ({
+  searchQuery,
+  purchasheState,
+  setPurchasheState,
+  cardData,
+  itemsAmount,
+  setItemsAmount,
+}) => {
   const [plantsData, setPlantsData] = useState([]);
   const paymentFormRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (paymentFormRef.current && !paymentFormRef.current.contains(event.target)) {
+      if (
+        paymentFormRef.current &&
+        !paymentFormRef.current.contains(event.target)
+      ) {
         setPurchasheState(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [setPurchasheState]);
 
   useEffect(() => {
-    axios.post('https://greenmind-2844.onrender.com/loadPlants')
+    axios
+      .post("https://greenmind-2844.onrender.com/loadPlants")
       .then((response) => {
         setPlantsData(response.data);
       })
       .catch((err) => {
-        console.log('Something went wrong while fetching plants data', err);
+        console.log("Something went wrong while fetching plants data", err);
       });
   }, []);
 
@@ -38,35 +49,63 @@ const Products = ({ searchQuery, purchasheState, setPurchasheState, cardData }) 
   };
 
   const fuse = new Fuse(plantsData, options);
-  const results = searchQuery ? fuse.search(searchQuery).map(result => result.item) : plantsData;
+  const results = searchQuery
+    ? fuse.search(searchQuery).map((result) => result.item)
+    : plantsData;
+
 
   return (
     <div className="products-container">
       {purchasheState && cardData && (
-        <PaymentForm 
-          purchashes={cardData.purchashes} 
-          paymentFormRef={paymentFormRef} 
+        <PaymentForm
+          purchashes={cardData.purchashes}
+          paymentFormRef={paymentFormRef}
           cardData={cardData}
-          setPurchasheState={setPurchasheState} 
-          purchasheState={purchasheState} 
+          setPurchasheState={setPurchasheState}
+          purchasheState={purchasheState}
         />
       )}
-      {results.length > 0 ? (
-        results.map((plant, index) => (
-          <PlantsCard
-            key={index}
-            imgURL={plant.imgUrl}
-            PlantsName={plant.plantsname}
-            Price={plant.price}
-            cardId={plant._id}
-            purchashes={plant.purchashes}
-            purchasheState={purchasheState}
-            setPurchasheState={setPurchasheState}
-          />
-        ))
-      ) : (
-        <p>Items not found...</p>
-      )}
+      <button
+        onClick={() =>
+          itemsAmount === "1-500-მდე"
+            ? setItemsAmount("500-დან ზევით")
+            : setItemsAmount("1-500-მდე")
+        }
+        className="change-amount-container"
+      >
+        {itemsAmount}
+      </button>
+
+      <div
+        style={{
+          width: "100%",
+          height: "auto",
+          display: "flex",
+          gap: "20px",
+          justifyContent: "space-around",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        {results.length > 0 ? (
+          results.map((plant, index) => (
+            <PlantsCard
+              key={index}
+              imgURL={plant.imgUrl}
+              PlantsName={plant.plantsname}
+              Price1={plant.price1}
+              Price2={plant.price2}
+              itemsAmount={itemsAmount}
+              cardId={plant._id}
+              purchashes={plant.purchashes}
+              purchasheState={purchasheState}
+              setPurchasheState={setPurchasheState}
+            />
+          ))
+        ) : (
+          <p>Items not found...</p>
+        )}
+      </div>
     </div>
   );
 };

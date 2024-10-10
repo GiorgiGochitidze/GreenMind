@@ -10,13 +10,14 @@ import Cart from "./Components/Cart";
 import AddNewPlants from "./Components/AddNewPlants";
 import Footer from "./Components/Footer";
 import { useState } from "react";
-import { useCardData } from "./Components/useCardData";   
+import { useCardData } from "./Components/useCardData";
 import TechWorks from "./Components/TechWorks";
 import Terms from "./Components/TermsAndConditions/Terms";
 
 function App() {
   const [purchasheState, setPurchasheState] = useState(false);
-  const {cardData} = useCardData()
+  const { cardData } = useCardData();
+  const [itemsAmount, setItemsAmount] = useState("1-500-მდე");
 
   return (
     <Router>
@@ -38,13 +39,24 @@ function App() {
               purchasheState={purchasheState}
               setPurchasheState={setPurchasheState}
               cardData={cardData}
+              itemsAmount={itemsAmount}
+              setItemsAmount={setItemsAmount}
             />
           }
         />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/LogIn" element={<LogIn />} />
-        <Route path="/Cart" element={<Cart purchasheState={purchasheState} setPurchasheState={setPurchasheState} />} />
+        <Route
+          path="/Cart"
+          element={
+            <Cart
+              purchasheState={purchasheState}
+              setPurchasheState={setPurchasheState}
+              itemsAmount={itemsAmount}
+            />
+          }
+        />
         <Route path="/AddNewPlants" element={<AddNewPlants />} />
         <Route path="/Terms" element={<Terms />} />
         <Route path="/TechWorks" element={<TechWorks />} />

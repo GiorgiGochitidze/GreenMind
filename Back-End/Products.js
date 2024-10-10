@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const Products = new mongoose.Schema({
     imgUrl: String,
     plantsname: String,
-    price: Number,
+    price1: Number,
+    price2: Number,
     cloudinaryId: { type: String },
     purchashes: Number,
     amount: String,

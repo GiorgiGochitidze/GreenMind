@@ -17,6 +17,9 @@ const PlantsCard = ({
   purchasheState,
   purchashes,
   setPurchasheState,
+  Price1,
+  Price2,
+  itemsAmount,
 }) => {
   const [buyState, setBuyState] = useState(false);
   const { handleGetCardData } = useCardData();
@@ -25,15 +28,24 @@ const PlantsCard = ({
   const [newPlantName, setNewPlantName] = useState("");
   const [editMsg, setEditMsg] = useState("");
 
-  const handleAddToCart = ({ imgURL, PlantsName, Price, purchashes }) => {
+  const handleAddToCart = ({
+    imgURL,
+    PlantsName,
+    Price1,
+    Price2,
+    itemsAmount,
+    purchashes,
+  }) => {
     axios
       .post("https://greenmind-2844.onrender.com/addToCart", {
         imgUrl: imgURL,
         plantsname: PlantsName,
-        price: Price,
+        price1: Price1,
+        price2: Price2,
         userId: decoded.userId,
         cardId: cardId,
         purchashes: purchashes,
+        amount: itemsAmount,
       })
       .then((response) => {
         console.log(response.data);
@@ -78,17 +90,18 @@ const PlantsCard = ({
       window.location.reload();
     }, 1000);
 
-    axios.post('https://greenmind-2844.onrender.com/editPlantCard', {
-      newPlantPrice,
-      newPlantName,
-      cardId
-    })
-    .then((response) => {
-      console.log(response.data)
-    })
-    .catch((err) => {
-      console.log('Error while editing card', err)
-    })
+    axios
+      .post("https://greenmind-2844.onrender.com/editPlantCard", {
+        newPlantPrice,
+        newPlantName,
+        cardId,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log("Error while editing card", err);
+      });
   };
 
   return (
@@ -98,7 +111,7 @@ const PlantsCard = ({
       className="plants-card"
     >
       <img className="plant-img" src={imgURL} alt="naturalPlant" />
-      {!editState && <p style={{fontFamily: 'GeorgianFont'}}>{PlantsName}</p>}
+      {!editState && <p style={{ fontFamily: "GeorgianFont" }}>{PlantsName}</p>}
       {editState && (
         <input
           className="edit-inputs"
@@ -109,7 +122,9 @@ const PlantsCard = ({
         />
       )}
       {!editState && (
-        <p style={{ color: "1E1E1E", opacity: "50%" }}>₾ {Price}</p>
+        <p style={{ color: "1E1E1E", opacity: "50%" }}>
+          ₾ {itemsAmount === "1-500-მდე" ? Price1 : Price2}
+        </p>
       )}
       {editState && (
         <input
@@ -131,11 +146,17 @@ const PlantsCard = ({
         <div
           className="cart-icon"
           style={{ right: decoded.role === "Admin" ? "55px" : "15px" }}
+          onClick={() =>
+            handleAddToCart({
+              imgURL,
+              PlantsName,
+              Price1,
+              Price2,
+              itemsAmount,
+            })
+          }
         >
-          <PiShoppingCartSimpleLight
-            onClick={() => handleAddToCart({ imgURL, PlantsName, Price })}
-            size={15}
-          />
+          <PiShoppingCartSimpleLight size={15} />
         </div>
       )}
 
@@ -155,14 +176,13 @@ const PlantsCard = ({
       )}
 
       {token && decoded.role === "Admin" && (
-        <div className="del-icon">
-          <p
-            onClick={() =>
-              handleDeleteProduct({ imgURL, PlantsName, Price, cardId })
-            }
-          >
-            X
-          </p>
+        <div
+          onClick={() =>
+            handleDeleteProduct({ imgURL, PlantsName, Price, cardId })
+          }
+          className="del-icon"
+        >
+          <p>X</p>
         </div>
       )}
 

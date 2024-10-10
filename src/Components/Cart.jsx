@@ -7,7 +7,7 @@ import { PiShoppingCartSimpleLight } from "react-icons/pi";
 import PaymentForm from "./PaymentForm";
 import { useCardData } from "./useCardData";
 
-const Cart = ({ purchasheState, setPurchasheState }) => {
+const Cart = ({ purchasheState, itemsAmount, setPurchasheState }) => {
   const token = sessionStorage.getItem("token");
   const decoded = token ? jwtDecode(token) : null;
   const paymentFormRef = useRef(null);
@@ -81,8 +81,11 @@ const Cart = ({ purchasheState, setPurchasheState }) => {
               </div>
             )}
             <img className="plant-img" src={item.imgUrl} alt="naturalPlant" />
-            <p style={{fontFamily: 'GeorgianFont'}}>{item.plantsname}</p>
-            <p style={{ color: "#1E1E1E", opacity: "50%" }}>₾ {item.price}</p>
+            <p style={{ fontFamily: "GeorgianFont" }}>{item.plantsname}</p>
+            <p style={{ color: "#1E1E1E", opacity: "50%" }}>
+              ₾ {itemsAmount === "1-500-მდე" ? item.price1 : item.price2}
+            </p>
+            {console.log(item.amount)}
 
             {hoveredIndex === index && (
               <motion.div
