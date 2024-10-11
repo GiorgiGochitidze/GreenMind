@@ -199,7 +199,7 @@ const PlantsCard = ({
               handleGetCardData({
                 imgURL,
                 price1: Price1,
-                price1: Price2,
+                price2: Price2,
                 amount: itemsAmount,
                 PlantsName,
                 cardId,

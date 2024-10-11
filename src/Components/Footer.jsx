@@ -157,7 +157,7 @@ const Footer = () => {
                 window.location.reload();
               }, 0.5);
             }}
-            to="/TechWorks"
+            to="/Privacy&Policy"
             style={LinkStyles}
           >
             <p>Privacy & Policy</p>

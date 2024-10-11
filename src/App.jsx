@@ -14,6 +14,7 @@ import { useCardData } from "./Components/useCardData";
 import TechWorks from "./Components/TechWorks";
 import Terms from "./Components/TermsAndConditions/Terms";
 import About from "./Components/AboutUsPage/About";
+import Privacy from "./Components/Privacy&Policy/Privacy";
 
 function App() {
   const [purchasheState, setPurchasheState] = useState(false);
@@ -62,6 +63,7 @@ function App() {
         <Route path="/AddNewPlants" element={<AddNewPlants />} />
         <Route path="/Terms" element={<Terms />} />
         <Route path="/AboutUs" element={<About />} />
+        <Route path="/Privacy&Policy" element={<Privacy />} />
         <Route path="/TechWorks" element={<TechWorks />} />
       </Routes>
       <Footer />

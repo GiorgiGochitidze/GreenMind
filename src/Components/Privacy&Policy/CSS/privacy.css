@@ -1,0 +1,10 @@
+.privacy-container{
+    width: 100%;
+    min-height: 500px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 30px;
+    gap: 20px;
+}
