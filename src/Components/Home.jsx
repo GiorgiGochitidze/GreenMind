@@ -26,7 +26,7 @@ const Home = ({ purchasheState, itemsAmount, setPurchasheState }) => {
         itemsAmount={itemsAmount}
       />
       <AboutUs />
-      <Categories />
+      {/* <Categories /> */}
       <Comments />
     </main>
   );

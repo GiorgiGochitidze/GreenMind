@@ -41,7 +41,7 @@ const Banner = ({ setSearchState, setSearchQuery }) => {
               lineHeight: "60px",
             }}
           >
-            Buy your <br /> dream plants
+            Buy your <br /> dream inventory
           </h1>
 
           <div className="amounts-counterInfo">

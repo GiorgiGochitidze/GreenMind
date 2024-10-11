@@ -27,3 +27,25 @@
 .change-amount-container:hover{
     cursor: pointer;
 }
+
+.productCards-container{
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-items: center;
+    align-items: center;
+    gap: 30px;
+}
+
+@media screen and (max-width: 860px) {
+    .productCards-container{
+        grid-template-columns: auto auto;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .productCards-container{
+        grid-template-columns: auto;
+    }
+}

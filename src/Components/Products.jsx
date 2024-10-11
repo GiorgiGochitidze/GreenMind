@@ -77,15 +77,7 @@ const Products = ({
       </button>
 
       <div
-        style={{
-          width: "100%",
-          height: "auto",
-          display: "flex",
-          gap: "20px",
-          justifyContent: "space-around",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
+        className="productCards-container"
       >
         {results.length > 0 ? (
           results.map((plant, index) => (
