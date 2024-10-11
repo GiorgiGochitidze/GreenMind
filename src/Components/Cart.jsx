@@ -99,7 +99,9 @@ const Cart = ({ purchasheState, itemsAmount, setPurchasheState }) => {
                     setPurchasheState(!purchasheState);
                     handleGetCardData({
                       imgURL: item.imgUrl, // Use imgURL here
-                      Price: item.price,
+                      price1: item.price1,
+                      price2: item.price2,
+                      amount: item.amount,
                       PlantsName: item.plantsname,
                       cardId: item._id,
                       purchashes: item.purchashes,

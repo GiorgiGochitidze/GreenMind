@@ -12,8 +12,8 @@ export const useCardData = () => {
 const CardDataProvider = ({ children }) => {
   const [cardData, setCardData] = useState(null);
 
-  const handleGetCardData = ({ imgURL, PlantsName, Price, cardId, purchashes }) => {
-    const newData = { imgURL, PlantsName, Price, cardId, purchashes };
+  const handleGetCardData = ({ imgURL, PlantsName, price1, price2, amount, cardId, purchashes }) => {
+    const newData = { imgURL, PlantsName, price1, price2, amount, cardId, purchashes };
     setCardData(newData);
   };
 

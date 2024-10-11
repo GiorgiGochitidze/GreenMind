@@ -65,7 +65,7 @@ const uri = `mongodb+srv://greenmind2424:${dbUserPass}@greenmind.apcab2o.mongodb
 const mongoLocal = "mongodb://localhost:27017/GreenMind";
 
 mongoose
-  .connect(uri)
+  .connect(mongoLocal)
   .then(() => {
     console.log("Connected MongoDB Successfully");
   })

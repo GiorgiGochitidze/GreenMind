@@ -10,6 +10,7 @@ const BestSellingPlants = ({
   purchasheState,
   searchQuery,
   setPurchasheState,
+  itemsAmount,
 }) => {
   const { cardData } = useCardData();
 
@@ -23,7 +24,7 @@ const BestSellingPlants = ({
             </h1>
             <p style={{ color: "rgba(30, 30, 30)", opacity: "50%" }}>
               Easiest way to <br /> healthy life by buying <br /> your favorite
-              plants{" "}
+              Items{" "}
             </p>
             <Link
               style={{ textDecoration: "none", color: "black" }}
@@ -39,6 +40,7 @@ const BestSellingPlants = ({
             setPurchasheState={setPurchasheState}
             purchasheState={purchasheState}
             cardData={cardData}
+            itemsAmount={itemsAmount}
           />
         </>
       )}

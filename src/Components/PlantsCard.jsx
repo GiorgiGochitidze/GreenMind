@@ -198,7 +198,9 @@ const PlantsCard = ({
               setPurchasheState(!purchasheState);
               handleGetCardData({
                 imgURL,
-                Price,
+                price1: Price1,
+                price1: Price2,
+                amount: itemsAmount,
                 PlantsName,
                 cardId,
                 purchashes,

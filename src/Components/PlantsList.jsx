@@ -4,7 +4,7 @@ import PaymentForm from "./PaymentForm";
 import PlantsCard from "./PlantsCard";
 import axios from "axios";
 
-const PlantsList = ({ purchasheState, setPurchasheState, cardData }) => {
+const PlantsList = ({ purchasheState, itemsAmount, setPurchasheState, cardData }) => {
   const [topPlantsData, setTopPlantsData] = useState([]);
   const paymentFormRef = useRef(null);
 
@@ -59,8 +59,10 @@ const PlantsList = ({ purchasheState, setPurchasheState, cardData }) => {
           key={index}
           imgURL={plants.imgUrl}
           PlantsName={plants.plantsname}
-          Price={plants.price}
+          Price1={plants.price1}
+          Price2={plants.price2}
           cardId={plants._id}
+          itemsAmount={itemsAmount}
           purchashes={plants.purchashes}
           purchasheState={purchasheState}
           setPurchasheState={setPurchasheState}

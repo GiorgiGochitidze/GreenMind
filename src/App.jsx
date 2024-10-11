@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useCardData } from "./Components/useCardData";
 import TechWorks from "./Components/TechWorks";
 import Terms from "./Components/TermsAndConditions/Terms";
+import About from "./Components/AboutUsPage/About";
 
 function App() {
   const [purchasheState, setPurchasheState] = useState(false);
@@ -29,6 +30,7 @@ function App() {
             <Home
               purchasheState={purchasheState}
               setPurchasheState={setPurchasheState}
+              itemsAmount={itemsAmount}
             />
           }
         />
@@ -59,6 +61,7 @@ function App() {
         />
         <Route path="/AddNewPlants" element={<AddNewPlants />} />
         <Route path="/Terms" element={<Terms />} />
+        <Route path="/AboutUs" element={<About />} />
         <Route path="/TechWorks" element={<TechWorks />} />
       </Routes>
       <Footer />

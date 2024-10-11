@@ -6,7 +6,7 @@ import Categories from "./Categories";
 import Comments from "./Comments";
 import "./CSS/home.css";
 
-const Home = ({ purchasheState, setPurchasheState }) => {
+const Home = ({ purchasheState, itemsAmount, setPurchasheState }) => {
   const [searchState, setSearchState] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -23,6 +23,7 @@ const Home = ({ purchasheState, setPurchasheState }) => {
         searchQuery={searchQuery}
         purchasheState={purchasheState}
         setPurchasheState={setPurchasheState}
+        itemsAmount={itemsAmount}
       />
       <AboutUs />
       <Categories />

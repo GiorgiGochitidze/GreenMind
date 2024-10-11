@@ -64,7 +64,7 @@ const Footer = () => {
                 window.location.reload();
               }, 0.5);
             }}
-            to="/TechWorks"
+            to="/AboutUs"
             style={LinkStyles}
           >
             <p>About</p>
