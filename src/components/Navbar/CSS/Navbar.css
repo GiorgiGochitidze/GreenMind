@@ -1,0 +1,31 @@
+header{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+header > nav{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 30px;
+}
+
+header > nav > p:first-child{
+    font-size: 20px;
+}
+
+.navigation-items{
+    display: flex;
+    gap: 50px;
+}
+
+.navigation-icons-list{
+    display: flex;
+    gap: 20px;
+}
