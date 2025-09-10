@@ -16,3 +16,7 @@ html {
   font-weight: normal;
   font-style: normal;
 }
+
+:root {
+  --color-mainColor: #c1dcdc;
+}

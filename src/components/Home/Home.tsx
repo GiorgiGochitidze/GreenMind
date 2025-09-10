@@ -1,7 +1,12 @@
+import LandingBanner from "./Landing/LandingBanner";
+import "./CSS/Home.css"
+
 const Home = () => {
-    return ( 
-        <h1>Home Page</h1>
-     );
-}
- 
+  return (
+    <main>
+      <LandingBanner />
+    </main>
+  );
+};
+
 export default Home;
