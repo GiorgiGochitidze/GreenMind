@@ -1,0 +1,92 @@
+.categories-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.categories-container h4{
+    font-size: 30px;
+}
+
+.categories-container p:first-of-type {
+  color: var(--color-descTextColor);
+}
+
+/* Categories List Styles */
+
+.categories-list-container{
+    width: 100%;
+    min-height: 500px;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--color-mainColor);
+    margin-top: 100px;
+    padding: 20px;
+    padding-bottom: 30px;
+}
+
+/* Categories Card Styles */
+
+.categories-card{
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.categories-card p:first-of-type{
+    color: black !important;
+}
+
+.categories-card img{
+    width: 100%;
+}
+
+.explore-button{
+    width: 120px;
+    height: 40px;
+    background-color: white;
+    border-radius: 10px;
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.categories-up{
+    margin-top: -250px;
+}
+
+@media screen and (max-width: 690px) {
+    .categories-up{
+        margin: 0;
+    }
+
+    .categories-list-container{
+        align-items: flex-start;
+        min-height: unset;
+        padding-block: 40px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .categories-list-container{
+       flex-direction: column;
+       align-items: center;
+    }
+}
+@media screen and (max-width: 375px) {
+    .categories-card{
+        width: 90%;
+    }
+}

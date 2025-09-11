@@ -8,12 +8,15 @@
 
 .banner-card {
   width: 90%;
-  height: 400px;
+  min-height: 400px;
+  height: auto;
   border-radius: 20px;
   background-color: var(--color-mainColor);
   display: flex;
   justify-content: space-between;
-  padding: 30px;
+  padding-inline: 30px;
+  padding-top: 30px;
+  gap: 10px;
 }
 
 .banner-text-container{
@@ -86,4 +89,61 @@
 
 .search-icon-container:hover{
     cursor: pointer;
+}
+
+.simple-statistics p:first-child{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 885px) {
+    .banner-card{
+        width: 500px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .landingBanner-container{
+        padding-top: 50px;
+    }
+
+    .banner-text-container{
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+
+    .simple-middleLine{
+        height: 50px;
+    }
+
+}
+
+@media screen and (max-width: 570px) {
+    .banner-card{
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .banner-image{
+        width: 100%;
+        min-height: unset;
+    }
+
+    .banner-text-container label{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .simple-statistics{
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .simple-middleLine{
+        width: 90%;
+        height: 1px;
+    }
 }

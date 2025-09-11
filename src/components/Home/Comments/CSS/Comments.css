@@ -1,0 +1,64 @@
+.comments-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-inline: 30px;
+  gap: 20px;
+}
+
+.comments-container h5 {
+  font-size: 30px;
+}
+
+/* Comments List */
+
+.comments-list {
+  width: 100%;
+  height: auto;
+  display: flex;
+  gap: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: auto;
+  cursor: grab;
+}
+
+.comments-list:active {
+  cursor: grabbing;
+}
+
+.comments-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Comment Card Styles */
+
+.comments-card {
+  min-width: 600px;
+  height: auto;
+  background-color: var(--color-mainColor);
+  padding: 30px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.comments-card p:first-of-type {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* show only 3 lines */
+  line-clamp: inherit;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 730px) {
+  .comments-card {
+    min-width: 90%; /* shrink with screen */
+    max-width: 100%; /* never overflow viewport */
+  }
+}
