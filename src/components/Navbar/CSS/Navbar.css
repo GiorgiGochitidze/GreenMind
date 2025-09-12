@@ -1,48 +1,64 @@
-header{
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    position: sticky;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    z-index: 100;
+header {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  position: sticky;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  z-index: 100;
 }
 
-header > nav{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-inline: 30px;
+header > nav {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 30px;
 }
 
-header > nav > p:first-child{
-    font-size: 20px;
+header > nav > p:first-child {
+  font-size: 20px;
 }
 
-.navigation-items{
-    display: flex;
-    gap: 50px;
+.navigation-items {
+  display: flex;
+  gap: 50px;
 }
 
-.navigation-icons-list{
-    display: flex;
-    gap: 20px;
+.navigation-items p {
+  transition: 0.1s all linear;
 }
 
-.menu-icon{
-    display: none;
+.navigation-items p:hover {
+  color: black;
 }
+
+.navigation-icons-list {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-icon {
+  display: none;
+}
+
+.navitaion-icons-item:hover{
+    cursor: pointer;
+}
+
+/* Responsive Styles */
 
 @media screen and (max-width: 700px) {
-    .menu-icon{
-        display: flex;
-    }
+  .menu-icon {
+    display: flex;
+  }
 
-    .navigation-items{
-        display: none;
-    }
+  .navigation-items {
+    display: none;
+  }
 }

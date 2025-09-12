@@ -1,6 +1,6 @@
-import { CiMenuFries, CiUser } from "react-icons/ci";
+import { CiMenuFries } from "react-icons/ci";
 import "./CSS/Navbar.css";
-import { PiShoppingCartSimpleLight } from "react-icons/pi";
+// import { PiShoppingCartSimpleLight } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 import { LinkStyles } from "../LinkStyles";
 
@@ -35,8 +35,11 @@ const Navbar = () => {
         </div>
 
         <div className="navigation-icons-list">
-          <PiShoppingCartSimpleLight size={25} />
-          <CiUser size={25} />
+          {/* <PiShoppingCartSimpleLight size={25} /> */}
+          <Link style={LinkStyles} to="/signIn">
+            <p className="navitaion-icons-item">Sign In</p>
+          </Link>
+          <p className="navitaion-icons-item">Sign Up</p>
           <CiMenuFries className="menu-icon" size={25} />
         </div>
       </nav>
