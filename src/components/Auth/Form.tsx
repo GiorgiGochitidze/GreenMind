@@ -1,5 +1,10 @@
 import { useState } from "react";
 import "./CSS/Form.css";
+import { Link, useNavigate } from "react-router-dom";
+import { LinkStyles } from "../LinkStyles";
+import { SignInUser, SignUpUser } from "../../store/slices/userSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 type FormModeTypes = {
   mode: "signIn" | "signUp";
@@ -10,22 +15,40 @@ const Form = ({ mode }: FormModeTypes) => {
   const [userName, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { message } = useAppSelector((state) => state.user);
 
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (isSignIn) {
+          dispatch(SignInUser({ email, password }));
+          setTimeout(() => {
+            navigate("/");
+          }, 1200);
+        } else {
+          dispatch(SignUpUser({ userName, email, password }));
+        }
+      }}
+    >
       <h1>{isSignIn ? "Sign In" : "Sign Up"}</h1>
-      <label htmlFor="userName">
-        <p>Your Name:</p>
-        <input
-          placeholder="John Doe"
-          type="text"
-          id="userName"
-          name="userName"
-          autoComplete="true"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-      </label>
+      {!isSignIn && (
+        <label htmlFor="userName">
+          <p>Your Name:</p>
+          <input
+            placeholder="John Doe"
+            type="text"
+            id="userName"
+            name="userName"
+            autoComplete="true"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </label>
+      )}
       <label htmlFor="email">
         <p>Your Email:</p>
         <input
@@ -40,24 +63,43 @@ const Form = ({ mode }: FormModeTypes) => {
       </label>
       <label htmlFor="password">
         <p>Your Password:</p>
-        <input
-          placeholder="Your Password"
-          type="Password"
-          id="password"
-          name="password"
-          autoComplete="true"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="input-container">
+          <input
+            placeholder="Your Password"
+            type={showPassword ? "text" : "password"}
+            id="password"
+            name="password"
+            autoComplete="true"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          {showPassword ? (
+            <FaRegEye
+              onClick={() => setShowPassword(!showPassword)}
+              className="eye-icon"
+              size={20}
+            />
+          ) : (
+            <FaRegEyeSlash
+              onClick={() => setShowPassword(!showPassword)}
+              className="eye-icon"
+              size={20}
+            />
+          )}
+        </div>
       </label>
-      <button className="auth-button">
+      {message && <p>{message}</p>}
+      <button type="submit" className="auth-button">
         {isSignIn ? "Sign In" : "Sign Up"}
       </button>
       <p>
-        Already Have account?{" "}
-        <span style={{ color: "blue", fontWeight: "bolder" }}>
-          {isSignIn ? "Sign Up" : "Sign In"}
-        </span>
+        {isSignIn ? "Already Have account?" : "Don't have account?"}{" "}
+        <Link to={isSignIn ? "/signUp" : "/signIn"} style={LinkStyles}>
+          <span style={{ color: "blue", fontWeight: "bolder" }}>
+            {isSignIn ? "Sign Up" : "Sign In"}
+          </span>
+        </Link>
       </p>
     </form>
   );

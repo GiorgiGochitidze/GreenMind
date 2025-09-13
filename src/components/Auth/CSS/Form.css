@@ -1,6 +1,5 @@
 form{
     width: 400px;
-    min-height: 450px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -21,16 +20,19 @@ form > label{
     gap: 5px;
 }
 
-form > label > input{
+form > label > input,
+.input-container input{
     width: 100%;
     min-height: 38px;
     border-radius: 5px ;
     border: 1px solid black;
     background-color: transparent;
-    padding-inline: 10px;
+    padding-left: 10px;
+    padding-right: 35px;
 }
 
-form > label > input:focus{
+form > label > input:focus,
+.input-container input:focus{
     outline: none;
 }
 
@@ -40,4 +42,24 @@ form > label > input:focus{
     background-color: transparent;   
     border: 1px solid black;
     border-radius: 10px;
+}
+
+.auth-button:hover{
+    cursor: pointer;
+}
+
+.input-container{
+    width: 100%;
+    position: relative;
+}
+
+.eye-icon{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+}
+
+.eye-icon:hover{
+    cursor: pointer;
 }

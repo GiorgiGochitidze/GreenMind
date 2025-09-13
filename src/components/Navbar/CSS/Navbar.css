@@ -5,7 +5,9 @@ header {
   justify-content: center;
   align-items: center;
   background-color: white;
-  position: sticky;
+  position: fixed;
+  top: 0;
+  left: 0;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   z-index: 100;
 }

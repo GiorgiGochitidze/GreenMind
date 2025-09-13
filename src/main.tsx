@@ -4,6 +4,8 @@ import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home/Home.tsx";
 import Auth from "./components/Auth/Auth.tsx";
+import { Provider } from "react-redux";
+import { store } from "./store/store.ts";
 
 const router = createBrowserRouter([
   {
@@ -18,5 +20,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")!).render(
+  <Provider store={store}>
   <RouterProvider router={router} />
+  </Provider>
 );
