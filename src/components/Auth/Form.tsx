@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./CSS/Form.css";
 import { Link, useNavigate } from "react-router-dom";
 import { LinkStyles } from "../LinkStyles";
-import { SignInUser, SignUpUser } from "../../store/slices/userSlice";
+import { LoadUser, SignInUser, SignUpUser } from "../../store/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
@@ -24,13 +24,31 @@ const Form = ({ mode }: FormModeTypes) => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
+
         if (isSignIn) {
-          dispatch(SignInUser({ email, password }));
-          setTimeout(() => {
-            navigate("/");
-          }, 1200);
+          dispatch(SignInUser({ email, password }))
+            .unwrap()
+            .then(() => {
+              setTimeout(() => {
+                navigate("/");
+                dispatch(LoadUser());
+              }, 1200);
+            })
+            .catch((err) => {
+              console.log("Sign in failed:", err);
+            });
         } else {
-          dispatch(SignUpUser({ userName, email, password }));
+          dispatch(SignUpUser({ userName, email, password }))
+            .unwrap()
+            .then(() => {
+              setTimeout(() => {
+                navigate("/");
+                dispatch(LoadUser());
+              }, 1200);
+            })
+            .catch((err) => {
+              console.log("Sign up failed:", err);
+            });
         }
       }}
     >

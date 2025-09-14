@@ -53,6 +53,51 @@ header > nav > p:first-child {
     cursor: pointer;
 }
 
+/* User Profile Styles */
+
+.user-profile-icon{
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: 0.2s all ease;
+}
+
+.user-profile-icon:hover{
+  cursor: pointer;
+}
+
+.profile-dropdown-container{
+  width: 200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.profile-dropdown-item{
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-dropdown-item:hover{
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
 /* Responsive Styles */
 
 @media screen and (max-width: 700px) {

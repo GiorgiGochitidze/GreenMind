@@ -4,7 +4,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import UserAuth from "./routes/User/UserAuthRoute.js";
 import LoadUser from "./routes/User/LoadUserRoute.js";
-import RefreshToken from "./routes/RefreshToken/RefreshTokenRoute.js"
+import RefreshToken from "./routes/RefreshToken/RefreshTokenRoute.js";
+import Logout from "./routes/User/LogoutRoute.js";
 const app = express();
 const PORT = 5000;
 import cookieParser from "cookie-parser";
@@ -33,6 +34,7 @@ mongoose
 app.use("/", UserAuth);
 app.use("/", LoadUser);
 app.use("/", RefreshToken);
+app.use("/", Logout);
 
 app.listen(PORT, () => {
   console.log("Server is running on localhost:5000");

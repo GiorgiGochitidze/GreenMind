@@ -29,7 +29,6 @@ export const SignInUser = createAsyncThunk(
         },
         { withCredentials: true }
       );
-      console.log(res.data.message);
       return res.data.message;
     } catch (err) {
       console.log("error while signing in", err);
@@ -78,6 +77,23 @@ export const SignUpUser = createAsyncThunk(
 
       console.log("Unknown error:", err);
       return rejectWithValue("An unknown error occurred");
+    }
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/logout",
+        {},
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (err) {
+      console.log("Error while logout", err);
+      rejectWithValue("Errorwhile Signing out");
     }
   }
 );
@@ -163,6 +179,11 @@ const userSlice = createSlice({
       .addCase(LoadUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.message = null;
       });
   },
 });
